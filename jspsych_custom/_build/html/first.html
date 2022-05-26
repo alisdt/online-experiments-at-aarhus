@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>An introduction to jsPsych</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="an-introduction-to-jspsych">
+<h1>An introduction to jsPsych<a class="headerlink" href="#an-introduction-to-jspsych" title="Permalink to this headline">¶</a></h1>
+<p>jsPsych is a JavaScript framework that makes it easier to construct
+presentation experiments.</p>
+<p>A typical jsPsych experiment will follow a sequence something like this:</p>
+<p>1. First, the experiment is loaded from the server onto the participant’s
+web browser (client). This is just like loading any other web page, so everything
+you saw in the last section about the network, web pages, HTML, CSS and so on
+applies here.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/jspsych_how_1.png"><img alt="_images/jspsych_how_1.png" src="_images/jspsych_how_1.png" style="width: 90%;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>2. Now the experiment runs. This can happen entirely within the participant’s web
+browser – it may not need to talk to the server at all. (It might though, for
+example to load images).</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/jspsych_how_2.png"><img alt="_images/jspsych_how_2.png" src="_images/jspsych_how_2.png" style="width: 90%;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>3. Finally, the experiment sends the results from the experiment back to the
+server.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/jspsych_how_3.png"><img alt="_images/jspsych_how_3.png" src="_images/jspsych_how_3.png" style="width: 90%;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="first-experiment">
+<h2>First experiment<a class="headerlink" href="#first-experiment" title="Permalink to this headline">¶</a></h2>
+<p>Let’s take a look at the <a class="reference external" href="http://www.jspsych.org/">jsPsych website</a>.</p>
+<p>We’re going to follow the first tutorial. On the left of the page, click on
+“Tutorials” and then “The Basics: Hello World”.</p>
+<p>This first example only uses the web browser, it doesn’t send any information
+back to the server. Once you’ve got it working, I’ll show you how to run the
+same experiment, with the files on the server.</p>
+<p>Here are some extra notes; keep these handy while you follow the tutorial.</p>
+<dl class="simple">
+<dt><strong>Step 1</strong></dt><dd><p>For convenience,
+<a class="reference external" href="https://github.com/jspsych/jsPsych/releases/download/v6.1.0/jspsych-6.1.0.zip">here’s the download link for jsPsych</a>.</p>
+</dd>
+<dt><strong>Step 2</strong></dt><dd><p>To create your file, in your text editor use “Save As ….”.
+Go to the folder where you unpacked jsPsych, and give the filename <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code>.</p>
+</dd>
+<dt><strong>Step 3</strong></dt><dd><p>To open <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code>, try double-clicking on it.
+If that doesn’t work, right-click on it, choose “Open with ….” and
+choose a web browser.</p>
+</dd>
+<dt><strong>Step 4</strong></dt><dd><p>If you already have the file open in the web browser, you just
+need to reload it. If that doesn’t work you may need to “hard reload”.
+How you do this depends on your browser:</p>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Firefox: ⌘-shift-R on Mac, ctrl-F5 on Windows or Linux</div>
+<div class="line">Chrome: ⌘-shift-R on Mac, ctrl-F5 on Windows or Linux</div>
+<div class="line">Safari: ⌘-option-E</div>
+<div class="line">Internet Explorer or Edge: ctrl-F5</div>
+</div>
+<p>Follow the tutorial through to the end. This will tell you how to create this first
+simple jsPsych program in the web browser. At this point it’s still all running
+on your computer – the browser is reading files from your computer’s disk. Nothing
+is being loaded from the internet.</p>
+<p>In a real online experiment, the files for the experiment would be on another computer
+(a server) and the participant would access them over the internet. Next, we’ll look
+at how to upload your experiment files to a server.</p>
+</div>
+<div class="section" id="uploading-your-experiment">
+<h2>Uploading your experiment<a class="headerlink" href="#uploading-your-experiment" title="Permalink to this headline">¶</a></h2>
+<p>You should have an account on the experiment server, <code class="docutils literal notranslate"><span class="pre">jspsychlearning.ppls.ed.ac.uk</span></code>.
+If not, please ask one of the tutors.</p>
+<p>To upload the experiment you’ll need some file transfer software. You’re welcome to
+use whatever you feel most comfortable with. For Windows or Mac, I recommend
+the free and open source program CyberDuck:</p>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://update.cyberduck.io/windows/Cyberduck-Installer-7.2.5.32097.exe">Windows link</a></div>
+<div class="line"><a class="reference external" href="https://update.cyberduck.io/Cyberduck-7.2.5.32097.zip">Mac link</a></div>
+</div>
+<p>For Linux, it will depend on your distribution. In most Linux distributions you can
+connect directly in the file browser, or use the <code class="docutils literal notranslate"><span class="pre">scp</span></code> command.</p>
+<div class="section" id="connect">
+<h3>Connect<a class="headerlink" href="#connect" title="Permalink to this headline">¶</a></h3>
+<p>These instructions use CyberDuck, but will be similar for other methods.</p>
+<p>First, open CyberDuck, and click on the “Open Connection” button:</p>
+<img alt="_images/open_connection.png" src="_images/open_connection.png" />
+<p>This window will appear:</p>
+<img alt="_images/connection.png" src="_images/connection.png" />
+<p>Select “SFTP” from the dropdown menu at the top.
+Fill in your UUN and the password you were given for your account.
+Under “Server” give the value:</p>
+<p><code class="docutils literal notranslate"><span class="pre">jspsychlearning.ppls.ed.ac.uk</span></code></p>
+<p>Click on Connect.</p>
+<img alt="_images/unknown_fingerprint.png" src="_images/unknown_fingerprint.png" />
+<p>This warning appears because CyberDuck on your computer hasn’t connected
+to this server before. Click “Allow”.</p>
+<img alt="_images/connected.png" src="_images/connected.png" />
+<p>You should now see this view. It shows two folders <a class="footnote-reference brackets" href="#dirs" id="id1">1</a>, <code class="docutils literal notranslate"><span class="pre">public_html</span></code>
+and <code class="docutils literal notranslate"><span class="pre">server_data</span></code>.</p>
+<p>Finally, you can make things more convenient for next time by selecting:</p>
+<p>Bookmarks → New bookmark</p>
+<p>in the CyberDuck menu. This will save these connection settings so you don’t have to type
+them in again.</p>
+</div>
+<div class="section" id="upload">
+<h3>Upload<a class="headerlink" href="#upload" title="Permalink to this headline">¶</a></h3>
+<p>Now create a new folder for your experiment. In CyberDuck, first go into the
+<code class="docutils literal notranslate"><span class="pre">public_html</span></code> directory by double-clicking on it. Right-click and select “New folder ….”.</p>
+<img alt="_images/create_folder.png" src="_images/create_folder.png" />
+<p>Call your new folder <code class="docutils literal notranslate"><span class="pre">hello</span></code>. (You can use another name if you like, but it’s best
+to use a name without any spaces – if you want to use multiple words, separate them with
+the underscore character, <code class="docutils literal notranslate"><span class="pre">_</span></code>). Click Create.</p>
+<p>Now drag your experiment file, <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code>, and the jspsych folder, over into your
+new folder.</p>
+<img alt="_images/copy_files.png" src="_images/copy_files.png" />
+<p>This will copy the files over to the server. Now you’re ready to test your experiment.</p>
+</div>
+<div class="section" id="test">
+<h3>Test<a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h3>
+<p>In your web browser, go to:</p>
+<p><a class="reference external" href="http://jspsychlearning.ppls.ed.ac.uk/~UUN/hello/experiment.html">http://jspsychlearning.ppls.ed.ac.uk/~UUN/hello/experiment.html</a></p>
+<p>but replace “UUN” with your username.</p>
+<p>You should see the text “Hello world” (or whatever message you wrote) in the middle of the screen.</p>
+</div>
+</div>
+<div class="section" id="nodes">
+<h2>Nodes<a class="headerlink" href="#nodes" title="Permalink to this headline">¶</a></h2>
+<p>Every jsPsych experiment is a series of nodes. Most nodes show a stimulus, or a set of stimuli,
+and then collect a response. In the tutorial you saw the example:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">hello_trial</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;html-keyboard-response&#39;</span><span class="p">,</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="s1">&#39;Hello world!&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This bit of code is in JavaScript. We’ll take a closer look at that later, but for now,
+all you need to know is that it defines a jsPsych node.</p>
+<p>Every node that displays some content has a “type” field.
+These types allow you to do different things like:</p>
+<ul class="simple">
+<li><p>Present a stimulus and collect a keyboard response</p></li>
+<li><p>Present a stimulus and collect a click response (button)</p></li>
+<li><p>Present a multiple choice question</p></li>
+</ul>
+<p>and many others.</p>
+<p>Go back to <a class="reference external" href="http://www.jspsych.org/">the jsPsych website</a> and click on “Plugins”.</p>
+<p>The node above has the type <code class="docutils literal notranslate"><span class="pre">html-keyboard-response</span></code>. The corresponding plugin
+is <code class="docutils literal notranslate"><span class="pre">jspsych-html-keyboard-response</span></code>. Find this in the response and click on it.</p>
+<p>Each kind of node can be set up using different parameters. The name of each parameter is
+the thing before the colon : in the code above. For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">stimulus:</span> <span class="pre">'Hello</span> <span class="pre">world!'</span></code></p>
+<p>means “the value of the <code class="docutils literal notranslate"><span class="pre">stimulus</span></code> parameter should be <code class="docutils literal notranslate"><span class="pre">'Hello</span> <span class="pre">world!'</span></code>.</p>
+<p>You’ll notice that most of these parameters weren’t specified in our example.
+Every parameter has a default value. If a value isn’t given, jsPsych will use
+this default value. In the case of html-keyboard-response, for example, the default
+for <code class="docutils literal notranslate"><span class="pre">trial_duration</span></code> is <code class="docutils literal notranslate"><span class="pre">null</span></code>. In the documentation it says:</p>
+<blockquote>
+<div><p>If this is null, then the stimulus will remain visible until the trial ends.</p>
+</div></blockquote>
+<p>In other words, the default is to wait until the trial ends. This leads to
+another question – when does the trial end? Take a look at the <code class="docutils literal notranslate"><span class="pre">response_ends_trial</span></code>
+parameter.</p>
+</div>
+<div class="section" id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
+<p>To illustrate the difference between different kinds of nodes, let’s change
+our “Hello world” example to display an image. Take a look at the documentation
+for <code class="docutils literal notranslate"><span class="pre">jspsych-image-keyboard-response</span></code> plugin. You can pick your own image to
+display, or if you need one,
+<a class="reference external" href="http://softdev.ppls.ed.ac.uk/static/images/nasa_proxima.png">use this</a>.</p>
+<p>Now try to change your jsPsych program to show the image.</p>
+<p>You’ll have to:</p>
+<ol class="arabic simple">
+<li><p>Upload the image with CyberDuck – make sure it’s in the same place as your experiment</p></li>
+<li><p>Change the type of the node in the JavaScript code</p></li>
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">jspsych-image-keyboard-response</span></code> at the top of your HTML file (see step 6 of
+the tutorial).</p></li>
+<li><p>Give jsPsych the name of the image – check the documentation to see how.</p></li>
+<li><p>Upload your code again once you’ve made these changes.</p></li>
+</ol>
+<p>A couple of things about files on the server:</p>
+<ul class="simple">
+<li><p>Note that you have to include the file extension of the image (e.g. .jpg or .png).
+By default Windows and Mac OS X will hide this from you. It is part of the filename,
+though, so without it jsPsych can’t find the file.</p></li>
+<li><p>The server cares about case of letters (capital vs. lower case letters). For example,
+if the file is called MYFACE.JPG and you type MyFace.jpg in your experiment, it won’t work.</p></li>
+</ul>
+</div>
+<div class="section" id="credit">
+<h2>Credit<a class="headerlink" href="#credit" title="Permalink to this headline">¶</a></h2>
+<p>If you use jsPsych, please credit its creator, Joshua R. de Leeuw.
+He requests that users of jsPsych do this by citing the following paper:</p>
+<p><a class="reference external" href="https://link.springer.com/article/10.3758/s13428-014-0458-y">de Leeuw, J. R. (2015). jsPsych: A JavaScript library for creating behavioral
+experiments in a web browser. Behavior Research Methods, 47(1), 1-12.
+doi:10.3758/s13428-014-0458-y</a></p>
+<p>The test image provided is of Proxima Centauri and was collected by <a class="reference external" href="https://www.nasa.gov/">NASA</a> .</p>
+<p class="rubric">Footnotes</p>
+<dl class="footnote brackets">
+<dt class="label" id="dirs"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>On some computers, these are also called “directories”.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="web.html">01 About the Web</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/first.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

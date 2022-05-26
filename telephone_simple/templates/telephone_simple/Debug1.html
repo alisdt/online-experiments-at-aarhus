@@ -1,0 +1,14 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}Title{% endblock %}
+
+{% block content %}
+
+<div>{{ player.id_in_group }}</div>
+
+<div>{{ current_player }}</div>
+
+{% next_button %}
+
+{% endblock %}

@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>An introduction to JavaScript</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="an-introduction-to-javascript">
+<h1>An introduction to JavaScript<a class="headerlink" href="#an-introduction-to-javascript" title="Permalink to this headline">¶</a></h1>
+<p>As mentioned briefly in the first session, JavaScript is a programming language that can be used
+to tell the web browser to react to user input, and change the contents of a web page dynamically
+after it has loaded.</p>
+<p>jsPsych is written in JavaScript, and builds on it to make common functions easier (like showing
+an image, waiting for a keypress, and so on).</p>
+<p>Open a new file, and add this text:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Test1<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+
+    <span class="c1">// code goes here!</span>
+
+    <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>This looks similar to our first experiments with jsPsych. Now you can add more code where the</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>// code goes here!
+</pre></div>
+</div>
+<p>comment is.</p>
+<p>Add the line</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>and reload the page. You’ll see a message box with <code class="docutils literal notranslate"><span class="pre">hello</span></code> (or whatever message you typed).</p>
+<div class="topic">
+<p class="topic-title">About this worksheet</p>
+<p>This is a very quick tour of some basic JavaScript. Teaching it all in depth would be
+a whole course to itself! The purpose of this worksheet is to give you an
+understanding of JavaScript to be better able to read jsPsych examples and
+documentation.</p>
+<p>You can work with these examples in a few ways. You could keep them all in the same
+file, though might get confusing (especially when you run them!)</p>
+<p>Alternatively, you can delete the code between the <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;&lt;/script&gt;</span></code> tag each time
+and start again.</p>
+<p>Finally, if you want to keep all the examples, start a new file for every example.</p>
+</div>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<p>Try this instead – change the code and reload the page in your web browser:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="s2">&quot;good morning&quot;</span><span class="p">;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="nx">greeting</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The variable <code class="docutils literal notranslate"><span class="pre">greeting</span></code> stores the value that we want to show. This variable is given to
+<code class="docutils literal notranslate"><span class="pre">window.alert()</span></code> which then shows that value. In JavaScript (and most programming languages)
+a variable can be used to store information for later.</p>
+</div>
+<div class="section" id="maths">
+<h2>Maths<a class="headerlink" href="#maths" title="Permalink to this headline">¶</a></h2>
+<p>Try this, as before, change the code and reload:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="mi">123</span><span class="o">*</span><span class="mi">456</span><span class="p">;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>JavaScript makes a good calculator! It uses <code class="docutils literal notranslate"><span class="pre">*</span></code> to multiply numbers. Similarly you can use
+<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code> and <code class="docutils literal notranslate"><span class="pre">/</span></code> for add, subtract and divide.</p>
+<p>You can also add text:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="s2">&quot;I wandered lonely &quot;</span><span class="o">+</span><span class="s2">&quot;as a cloud&quot;</span><span class="p">;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>What do you think will happen if you run this code?</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="mi">123</span><span class="o">+</span><span class="s2">&quot;hi&quot;</span><span class="p">;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Try it and see if you were right.</p>
+</div>
+<div class="section" id="conditions">
+<h2>Conditions<a class="headerlink" href="#conditions" title="Permalink to this headline">¶</a></h2>
+<p>Try this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">the_number</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">the_number</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;the number is greater than 10&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now change the <code class="docutils literal notranslate"><span class="pre">15</span></code> in the first line to <code class="docutils literal notranslate"><span class="pre">5</span></code>. If you reload
+the page you’ll see that no alert appears. Change it back to something
+higher than <code class="docutils literal notranslate"><span class="pre">10</span></code>. Reload again, and this time the message appears.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">if</span></code>, it looks like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">commands</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>(this is just an illustration, no need to type it in!)</p>
+<p>This is made up of</p>
+<ol class="arabic simple">
+<li><p>the word <code class="docutils literal notranslate"><span class="pre">if</span></code>,</p></li>
+<li><p>in round brackets <code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span></code> <a class="footnote-reference brackets" href="#round" id="id1">1</a>, a condition i.e. something that can be examined to see if it’s true or false, and</p></li>
+<li><p>in curly brackets <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">}</span></code> <a class="footnote-reference brackets" href="#curly" id="id2">2</a>, a block of code, which is a series of JavaScript commands with <code class="docutils literal notranslate"><span class="pre">;</span></code> at the end of each command.</p></li>
+</ol>
+<div class="topic">
+<p class="topic-title">Conditions</p>
+<p>As you saw in the example, <code class="docutils literal notranslate"><span class="pre">if</span></code> decides whether
+to run some code or not depending on a condition.</p>
+<p>It’s important to note that when comparing two values to see if they are equal,
+you must use two equals signs <code class="docutils literal notranslate"><span class="pre">==</span></code>. A single equals sign <code class="docutils literal notranslate"><span class="pre">=</span></code> sets a variable.</p>
+<p>For example, this code:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+</pre></div>
+</div>
+<p>is testing if the value of the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> is <code class="docutils literal notranslate"><span class="pre">3</span></code>. This code:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>is creating a new variable <code class="docutils literal notranslate"><span class="pre">x</span></code>, and using it to store the value <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p>
+</div>
+<p>You can also provide
+alternative code to run if the condition is not true. Change your code
+to look like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">the_number</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">the_number</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;the number is greater than 10&quot;</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;the number is less than or equal to 10&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now change the number a few times. Each time, hit reload and see what
+happens. You’ll see that now, you <em>always</em> get a message. If you use
+<code class="docutils literal notranslate"><span class="pre">if</span></code> with <code class="docutils literal notranslate"><span class="pre">else</span></code>, exactly one of the two blocks of code will run.</p>
+<div class="topic">
+<p class="topic-title">Code blocks vs. objects</p>
+<p>The curly brackets are often used to enclose
+blocks of code, when using <code class="docutils literal notranslate"><span class="pre">if</span></code> and in other contexts.
+But they are also used to write nodes in jsPsych:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">my_node</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;image-keyboard-response&quot;</span><span class="p">,</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="s2">&quot;fluffydog.jpg&quot;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>This is a completely different use of curly brackets! The easiest
+way to tell the difference is that the items in a code block will
+end with a <code class="docutils literal notranslate"><span class="pre">;</span></code> (semicolon).</p>
+<p>In a <em>JavaScript object</em> like a node, they will end with a <code class="docutils literal notranslate"><span class="pre">,</span></code> (comma).</p>
+</div>
+</div>
+<div class="section" id="loops">
+<h2>Loops<a class="headerlink" href="#loops" title="Permalink to this headline">¶</a></h2>
+<p>Try this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;The number is &quot;</span><span class="o">+</span><span class="nx">i</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You’ll see five alerts, with the numbers from 1 to 5. The code above is a loop, it runs the
+code in the code block several times.</p>
+<p>Taking a closer look at the code:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">for</span></code> tells the program to expect a loop</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span></code> then there are round brackets, with some instructions on how to run the loop</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">i=1</span></code> runs once at the start of the loop – create <code class="docutils literal notranslate"><span class="pre">i</span></code> and make it equal to 1</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">6</span></code> means “keep running the loop while <code class="docutils literal notranslate"><span class="pre">i</span></code> is less than 6”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i++</span></code> runs after the code every time round the loop. It means “add 1 to <code class="docutils literal notranslate"><span class="pre">i</span></code>”.
+(Similarly, <code class="docutils literal notranslate"><span class="pre">i--</span></code> means “subtract 1 from <code class="docutils literal notranslate"><span class="pre">i</span></code>”)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">}</span></code> then there are curly brackets with a code block</p></li>
+</ul>
+<div class="section" id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p>Can you change the loop so that it counts down from 5 to 1?</p>
+</div>
+</div>
+<div class="section" id="arrays">
+<h2>Arrays<a class="headerlink" href="#arrays" title="Permalink to this headline">¶</a></h2>
+<p>An array in JavaScript is a list of items.</p>
+<p>For example, try:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">vegetables</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Carrot&quot;</span><span class="p">,</span> <span class="s2">&quot;Cabbage&quot;</span><span class="p">,</span> <span class="s2">&quot;Parsnip&quot;</span><span class="p">,</span> <span class="s2">&quot;Potato&quot;</span><span class="p">];</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="nx">vegetables</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>What happened here? <code class="docutils literal notranslate"><span class="pre">vegetables[2]</span></code> selects an item from the array. It’s not
+the second one though. This is because JavaScript (like many programming languages)
+starts counting from zero! Try changing the code to read <code class="docutils literal notranslate"><span class="pre">vegetables[0]</span></code> reload –
+does this do what you expect?</p>
+<div class="section" id="looping-through-an-array">
+<span id="for-of"></span><h3>Looping through an array<a class="headerlink" href="#looping-through-an-array" title="Permalink to this headline">¶</a></h3>
+<p>What if we want to use a loop to go through these items, running some code for each item?</p>
+<p>One way is this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">vegetables</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Carrot&quot;</span><span class="p">,</span> <span class="s2">&quot;Cabbage&quot;</span><span class="p">,</span> <span class="s2">&quot;Parsnip&quot;</span><span class="p">,</span> <span class="s2">&quot;Potato&quot;</span><span class="p">];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">veg</span> <span class="k">of</span> <span class="nx">vegetables</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;I&#39;m eating a &quot;</span><span class="o">+</span><span class="nx">veg</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This is a different kind of <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, where we run the code for each item in a list.
+Unfortunately some older browsers (notably Internet Explorer) don’t support this.
+A more universal method, which will work on older browsers is this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">vegetables</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Carrot&quot;</span><span class="p">,</span> <span class="s2">&quot;Cabbage&quot;</span><span class="p">,</span> <span class="s2">&quot;Parsnip&quot;</span><span class="p">,</span> <span class="s2">&quot;Potato&quot;</span><span class="p">];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">vegetables</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;I&#39;m eating a &quot;</span><span class="o">+</span><span class="nx">vegetables</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This is using a numerical loop, like the first one you saw above, to go through
+the list.</p>
+</div>
+</div>
+<div class="section" id="using-a-loop-in-jspsych">
+<h2>Using a loop in jsPsych<a class="headerlink" href="#using-a-loop-in-jspsych" title="Permalink to this headline">¶</a></h2>
+<p>Copy one of your existing experiments – we’ll use this as a template for a new one.
+Take a look in <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code> and make sure it loads the <code class="docutils literal notranslate"><span class="pre">jspsych-html-keyboard-response</span></code>
+plugin.</p>
+<p>Here’s a quick example of how you might use a loop in a jsPsych program. Copy the code below
+into <code class="docutils literal notranslate"><span class="pre">experiment.js</span></code>:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">11</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">node</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;html-keyboard-response&#39;</span><span class="p">,</span>
+        <span class="nx">stimulus</span><span class="o">:</span> <span class="nx">i</span><span class="p">,</span>
+        <span class="nx">trial_duration</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
+        <span class="nx">response_ends_trial</span><span class="o">:</span> <span class="kc">false</span>
+    <span class="p">}</span>
+    <span class="nx">nodes</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">jsPsych</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="nx">nodes</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">push()</span></code> method inside the loop is used to add something on to the end of
+a list – this is quite a common way of building up a timeline in jsPsych.</p>
+<div class="section" id="id3">
+<h3>Exercise<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Instead of the code above which displays a number, create an experiment which loops through
+an array of strings, showing each one in turn. So if you start with:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">sentence</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;wandered&quot;</span><span class="p">,</span> <span class="s2">&quot;lonely&quot;</span><span class="p">,</span> <span class="s2">&quot;as&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;cloud&quot;</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>the experiment should show each of these words in order. (Hint: see the use of <code class="docutils literal notranslate"><span class="pre">for</span></code> …. <code class="docutils literal notranslate"><span class="pre">of</span></code>
+<a class="reference internal" href="#for-of"><span class="std std-ref">above</span></a>).</p>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>One of the most fundamental building blocks in JavaScript is the function. A function is a
+block of code that is stored to be used later. Once you have stored some code, you can run
+it as many times as you like.</p>
+<p>Try this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">greeting</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;hello!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This code <em>defines</em> a function, in other words, it stores the code for
+later use, but doesn’t run it. Now after that, add:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">greeting</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>This <em>calls</em> the function. That means it runs the code that was stored earlier.</p>
+<p>Think of a function like a recipe for a cake. Defining the function
+is like writing the recipe. Calling the function is like baking the
+cake!</p>
+<p>You can write a recipe once, and then follow it many times. In the same way,
+in JavaScript you define a function once, but call it many times.</p>
+<p>Add a few more calls to your function:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">greeting</span><span class="p">();</span>
+<span class="nx">greeting</span><span class="p">();</span>
+<span class="nx">greeting</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The action in the function is repeated as many times as the function is called.</p>
+<p>Now change your function to look like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">greeting</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;hello &quot;</span><span class="o">+</span><span class="nx">person</span><span class="o">+</span><span class="s2">&quot;!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now the function takes a <em>parameter</em>, a piece of information that you pass to it.</p>
+<p>Change the calls to the function to give it this information:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">greeting</span><span class="p">(</span><span class="s1">&#39;Hendrick&#39;</span><span class="p">);</span>
+<span class="nx">greeting</span><span class="p">(</span><span class="s1">&#39;Arran&#39;</span><span class="p">);</span>
+<span class="nx">greeting</span><span class="p">(</span><span class="s1">&#39;Priyangi&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>A function that takes multiple parameters separates them with commas:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">example_function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">,</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
+</pre></div>
+</div>
+<div class="section" id="id4">
+<h3>Exercise<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Given a list of names:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Hendrick&#39;</span><span class="p">,</span> <span class="s1">&#39;Arran&#39;</span><span class="p">,</span> <span class="s1">&#39;Kalvyn&#39;</span><span class="p">,</span> <span class="s1">&#39;Priyangi&#39;</span><span class="p">,</span> <span class="s1">&#39;Ted&#39;</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>how would you call the <code class="docutils literal notranslate"><span class="pre">greeting()</span></code> function for each item in the list?</p>
+</div>
+<div class="section" id="return-value">
+<h3>Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h3>
+<p>Functions can also return a value. Try this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">square</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="o">*</span><span class="nx">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="nx">square</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="nx">square</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Here the word <em>return</em> means “give this value back to where the function is called”.</p>
+</div>
+</div>
+<div class="section" id="use-of-functions-in-jspsych">
+<span id="id5"></span><h2>Use of functions in jsPsych<a class="headerlink" href="#use-of-functions-in-jspsych" title="Permalink to this headline">¶</a></h2>
+<p>Let’s look at an example we’ve already seen.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="p">[</span><span class="nx">trials_with_variables</span><span class="p">],</span>
+    <span class="nx">on_finish</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">displayData</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Here the <code class="docutils literal notranslate"><span class="pre">on_finish</span></code> field specifies an action to occur when the experiment ends.</p>
+<p>Why does this say:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">on_finish</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">displayData</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>and not just this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">on_finish</span><span class="o">:</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">displayData</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The answer is that putting the call inside a function delays its action.
+If the code was written the second way, it would run before <code class="docutils literal notranslate"><span class="pre">jsPsych.init</span></code> ran.
+Written the first way, in runs when <code class="docutils literal notranslate"><span class="pre">on_finish</span></code> is <em>used</em>, at the end of the
+experiment.</p>
+<p>If this seems confusing, don’t worry – just remember that the form above (using
+<code class="docutils literal notranslate"><span class="pre">function()</span> <span class="pre">{</span> <span class="pre">....</span> <span class="pre">}</span></code>) is used to delay the action of some code.</p>
+<div class="topic">
+<p class="topic-title">Different ways of defining functions</p>
+<p>The examples in this section are just for illustration, so
+don’t type them in!</p>
+<p>A function in JavaScript can be defined like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">myfunc</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">&quot;The input was &quot;</span><span class="o">+</span><span class="nx">x</span><span class="o">+</span><span class="s2">&quot; and &quot;</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>and called like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">myfunc</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>or this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myfunc</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>In this case the function has a name. If we want to
+define a function and immediately use it, we can define it
+like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="s2">&quot;The input was &quot;</span><span class="o">+</span><span class="nx">x</span><span class="o">+</span><span class="s2">&quot; and &quot;</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="nx">y</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Newer versions of JavaScript have another way to define functions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="s2">&quot;The input was &quot;</span><span class="o">+</span><span class="n">x</span><span class="o">+</span><span class="s2">&quot; and &quot;</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">y</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This new way isn’t used as widely, as it’s not supported on some older browsers and browser versions.</p>
+</div>
+<p class="rubric">Footnotes</p>
+<dl class="footnote brackets">
+<dt class="label" id="round"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>…. also called “parentheses”.</p>
+</dd>
+<dt class="label" id="curly"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>…. also called “braces”.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="web.html">01 About the Web</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/javascript.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

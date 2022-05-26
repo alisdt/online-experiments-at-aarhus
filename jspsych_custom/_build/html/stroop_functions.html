@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>Stroop with functions</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="stroop-with-functions">
+<span id="stroop-functions"></span><h1>Stroop with functions<a class="headerlink" href="#stroop-with-functions" title="Permalink to this headline">¶</a></h1>
+<p>Example <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code>. You may have to change this slightly
+depending on the location of your copy of jsPsych on the server.</p>
+<p>It contains some extra style information to make the background grey,
+and make the text of the stimulus bigger and boldface.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>My experiment<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;jspsych-6.0/jspsych.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;jspsych-6.0/plugins/jspsych-html-keyboard-response.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;jspsych-6.0/plugins/jspsych-instructions.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;jspsych-6.0/css/jspsych.css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">link</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;experiment.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+      <span class="nt">body</span> <span class="p">{</span>
+        <span class="k">background-color</span><span class="p">:</span> <span class="mh">#777777</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="p">.</span><span class="nc">jspsych-display-element</span> <span class="p">{</span>
+         <span class="k">font-size</span><span class="p">:</span> <span class="kc">xx-large</span><span class="p">;</span>
+         <span class="k">font-family</span><span class="p">:</span> <span class="n">sans</span><span class="p">;</span>
+         <span class="k">font-weight</span><span class="p">:</span> <span class="kc">bold</span>
+      <span class="p">}</span>
+    <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>And <code class="docutils literal notranslate"><span class="pre">experiment.js</span></code>:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// the colours are also the words ....</span>
+<span class="kd">var</span> <span class="nx">colours</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">];</span>
+
+<span class="kd">var</span> <span class="nx">n_trials</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+
+<span class="c1">// returns a JavaScript object with { text: ...., colour: .... }</span>
+<span class="c1">// using a random colour (text is the same as colour)</span>
+<span class="kd">function</span> <span class="nx">congruent</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// pick a colour ....</span>
+    <span class="c1">// (when we&#39;re only picking one, with/without replacement doesn&#39;t matter)</span>
+    <span class="kd">var</span> <span class="nx">colour_list</span> <span class="o">=</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">randomization</span><span class="p">.</span><span class="nx">sampleWithReplacement</span><span class="p">(</span><span class="nx">colours</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+    <span class="c1">// this returns a list with one item, so we select the first (only) item</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="nx">text</span><span class="o">:</span> <span class="nx">colour_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">colour</span><span class="o">:</span> <span class="nx">colour_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">condition</span><span class="o">:</span> <span class="s1">&#39;congruent&#39;</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// returns a JavaScript object with { text: ...., colour: .... }</span>
+<span class="c1">// using a random colour (text is different to colour)</span>
+<span class="kd">function</span> <span class="nx">incongruent</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// pick two colours without replacement (i.e. they will be different)</span>
+    <span class="kd">var</span> <span class="nx">colour_list</span> <span class="o">=</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">randomization</span><span class="p">.</span><span class="nx">sampleWithoutReplacement</span><span class="p">(</span><span class="nx">colours</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+    <span class="c1">// this returns a list with two item, we select these out</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="nx">text</span><span class="o">:</span> <span class="nx">colour_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">colour</span><span class="o">:</span> <span class="nx">colour_list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">condition</span><span class="o">:</span> <span class="s1">&#39;incongruent&#39;</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// these are in HTML, so &lt;br&gt; means &quot;line break&quot;</span>
+<span class="kd">var</span> <span class="nx">instructions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;instructions&#39;</span><span class="p">,</span>
+    <span class="nx">pages</span><span class="o">:</span> <span class="p">[</span>
+      <span class="s2">&quot;Welcome to the experiment.&lt;br&gt;Press Space to continue.&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;In this experiment you will be presented with the words blue, red, yellow and green.&lt;br&gt;Press Space to continue.&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;As soon as you see a new word, press its first letter.&lt;br&gt;For example, press the B key for blue.&lt;br&gt;Press Space to continue.&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Try to answer as quickly as you can!&lt;br&gt;Press Space to start the experiment.&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="nx">key_forward</span><span class="o">:</span> <span class="s1">&#39; &#39;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">fixation</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;html-keyboard-response&#39;</span><span class="p">,</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span>
+    <span class="nx">trial_duration</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="nx">response_ends_trial</span><span class="o">:</span> <span class="kc">false</span>
+<span class="p">};</span>
+
+<span class="c1">// blank (ITI stands for &quot;inter trial interval&quot;)</span>
+<span class="kd">var</span> <span class="nx">iti</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;html-keyboard-response&#39;</span><span class="p">,</span>
+  <span class="nx">stimulus</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+  <span class="nx">trial_duration</span><span class="o">:</span> <span class="mi">250</span><span class="p">,</span>
+  <span class="nx">response_ends_trial</span><span class="o">:</span> <span class="kc">false</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">trials</span> <span class="o">=</span> <span class="p">[</span><span class="nx">instructions</span><span class="p">];</span>
+<span class="c1">// repeat this code n_trials times</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">n_trials</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">values</span><span class="p">;</span>
+    <span class="c1">// Math.random returns a random number between 0 and 1. Use this to decide</span>
+    <span class="c1">// whether the current trial is congruent or incongruent.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">values</span> <span class="o">=</span> <span class="nx">congruent</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">values</span> <span class="o">=</span> <span class="nx">incongruent</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">trial</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;html-keyboard-response&#39;</span><span class="p">,</span>
+        <span class="nx">stimulus</span><span class="o">:</span> <span class="s1">&#39;&lt;p style=&quot;color: &#39;</span><span class="o">+</span><span class="nx">values</span><span class="p">.</span><span class="nx">colour</span><span class="o">+</span><span class="s1">&#39;&quot;&gt;&#39;</span><span class="o">+</span><span class="nx">values</span><span class="p">.</span><span class="nx">text</span><span class="o">+</span><span class="s1">&#39;&lt;/p&gt;&#39;</span><span class="p">,</span>
+        <span class="c1">// &#39;choices&#39; restricts the available responses for the participant</span>
+        <span class="nx">choices</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">],</span>
+        <span class="nx">data</span><span class="o">:</span> <span class="nx">values</span>
+    <span class="p">};</span>
+    <span class="nx">trials</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">iti</span><span class="p">);</span>
+    <span class="nx">trials</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">fixation</span><span class="p">);</span>
+    <span class="nx">trials</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">trial</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">jsPsych</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="nx">trials</span><span class="p">,</span>
+    <span class="nx">on_finish</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">displayData</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="web.html">01 About the Web</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/stroop_functions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

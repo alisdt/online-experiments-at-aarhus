@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>About the Web</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="An introduction to jsPsych" href="jspsych_au.html" />
+    <link rel="prev" title="Online Experiments" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="about-the-web">
+<h1>About the Web<a class="headerlink" href="#about-the-web" title="Permalink to this headline">¶</a></h1>
+<p>The internet is a big network of computers, all connected. Here’s a picture:</p>
+<a class="reference internal image-reference" href="_images/the_internet.jpg"><img alt="_images/the_internet.jpg" src="_images/the_internet.jpg" style="width: 90%;" /></a>
+<p>In reality there are many more, of course! Let’s think about what needs to happen
+for you to see this web page. This page is on another computer – saved on a disk
+just as it would be on your computer. The other computer’s name on the
+network is <strong>tullo.co.uk</strong>.</p>
+<div class="section" id="requests-and-responses">
+<h2>Requests and responses<a class="headerlink" href="#requests-and-responses" title="Permalink to this headline">¶</a></h2>
+<p>Your computer (or
+phone) needs to send a request for this information. This will pass through
+many other computers on the way. Once the request is received, the information
+will be sent back. It doesn’t have to go the same way each time!</p>
+<p>We refer to the computer making the request as a <strong>client</strong> and the computer
+responding to it as a <strong>server</strong>. Usually servers don’t have a screen or keyboard,
+they are just connected straight to the network – that’s how they interact with
+the world. They are sometimes powerful, in order to quickly handle large numbers
+of requests. Other than that they are very similar to the computer on your desk,
+they have files on a disk, and can run programs.</p>
+</div>
+<div class="section" id="html">
+<h2>HTML<a class="headerlink" href="#html" title="Permalink to this headline">¶</a></h2>
+<p>When a web page is sent to your computer, it will be in HTML. This is a language
+which can represent the content and structure of a page – how text is divided,
+which images will be included, and so on. To see what it looks like, you can ask
+your web browser:</p>
+<dl class="simple">
+<dt>Firefox or Chrome</dt><dd><p>Right-click and “View Page Source”</p>
+</dd>
+<dt>Internet Explorer</dt><dd><p>Right-click and “View Source”</p>
+</dd>
+<dt>Edge</dt><dd><p>Press F12 to start Developer tools, then right-click and “View Source”</p>
+</dd>
+<dt>Safari</dt><dd><p>Preferences → Advanced and check “Show Develop menu in menu bar”
+(this will be useful later, too).
+You can then choose Develop → Show Page Source</p>
+</dd>
+</dl>
+<p>You’ll see that all the content of the page is in there. The extra information
+in the tags help to give the document structure.</p>
+<p>For example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>About the Web<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>This sets the text that appears in the title bar of your browser window.</p>
+<p>To give another example, a
+<a class="reference external" href="http://tullo.co.uk/jspsych_aarhus/web.html">link to this page</a>
+looks like this:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;reference external&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://tullo.co.uk/jspsych_aarhus/web.html&quot;</span><span class="p">&gt;</span>link to this page<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="css">
+<h2>CSS<a class="headerlink" href="#css" title="Permalink to this headline">¶</a></h2>
+<p>That’s not the whole story, though. As well as the text, there also need to be
+instructions on how to show it. This includes things like font, colour, line
+spacing and so on.</p>
+<p>Near the top of the page you’ll see:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;_static/alabaster.css&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<p>This tells the browser to use a stylesheet, telling it how to format the page.
+Let’s take a look at it. Click on the text after <code class="docutils literal notranslate"><span class="pre">href=</span></code> in your
+“view source” window. (If that doesn’t work, use
+<a class="reference external" href="http://tullo.co.uk/jspsych_aarhus/_static/alabaster.css">this link here</a>).
+You’ll have to scroll down!</p>
+<p>Just after the heading “body styles”, you’ll see this:</p>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="nt">a</span> <span class="p">{</span>
+    <span class="k">color</span><span class="p">:</span> <span class="mh">#004B6B</span><span class="p">;</span>
+    <span class="k">text-decoration</span><span class="p">:</span> <span class="kc">underline</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This relates to an <code class="docutils literal notranslate"><span class="pre">a</span></code> tag, which is a text link. Remember that the link we
+saw above used a tag starting with <code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">href=&quot;</span> <span class="pre">....</span></code>.</p>
+<p>When the web browser sees the <code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">....&gt;</span> <span class="pre">....</span> <span class="pre">&lt;/a&gt;</span></code> it uses the information
+in the relevant CSS to format the link.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">color:</span> <span class="pre">#004B6B;</span></code></dt><dd><p>is a way of specifying
+a particular shade of blue. (There are easier ways for more common colours!).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">text-decoration:</span> <span class="pre">underline;</span></code></dt><dd><p>tells the browser to underline the text.</p>
+</dd>
+</dl>
+<p>Looking back at the displayed page, you can see that the link is indeed blue
+and underlined.</p>
+</div>
+<div class="section" id="javascript">
+<h2>JavaScript<a class="headerlink" href="#javascript" title="Permalink to this headline">¶</a></h2>
+<p>JavaScript is a language that can be used to run a program in your web browser.
+It can be used to change the contents of a page, and can respond to the user’s
+actions (for example, mouse clicks or key presses).</p>
+<p>This is important because it gives us a way to run a program inside the web
+browser. Without JavaScript, the only way to interact with the user would be
+by loading a different page, or loading the same page again.</p>
+<p>This is what jsPsych uses to run the experiment. All you need to do is write
+some code to describe what you what to happen in the experiment – what
+stimuli should be shown, and what kind of responses should be collected.</p>
+</div>
+<div class="section" id="thanks">
+<h2>Thanks!<a class="headerlink" href="#thanks" title="Permalink to this headline">¶</a></h2>
+<p>With gratitude to the
+<a class="reference external" href="https://tutorial.djangogirls.org/en/how_the_internet_works/">DjangoGirls intro</a>,
+for inspiration.</p>
+<p>Internet image: By The Opte Project CC BY 2.5 (<a class="reference external" href="http://creativecommons.org/licenses/by/2.5">http://creativecommons.org/licenses/by/2.5</a> ),
+via Wikimedia Commons, <a class="reference external" href="https://commons.wikimedia.org/wiki/File:Internet_map_1024.jpg">original source here</a> .</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">01 About the Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requests-and-responses">Requests and responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#html">HTML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#css">CSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#javascript">JavaScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thanks">Thanks!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jspsych_au.html">02 About jsPsych</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Online Experiments</a></li>
+      <li>Next: <a href="jspsych_au.html" title="next chapter">An introduction to jsPsych</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/web.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

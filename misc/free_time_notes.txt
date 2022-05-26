@@ -1,0 +1,8 @@
+- Talk about Typescript
+- Talk about open source example experiments (audio, loading CSV)
+- Talk about open sourcing stuff in general
+- Ask for descriptions of experiments people are interested in
+
+- PHP script to database - saving line by line
+- WebSocket example
+

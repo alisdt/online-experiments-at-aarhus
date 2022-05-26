@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>More interesting stimuli</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="more-interesting-stimuli">
+<h1>More interesting stimuli<a class="headerlink" href="#more-interesting-stimuli" title="Permalink to this headline">¶</a></h1>
+<p>So far the experiments we’ve created have only used simple text and static images.</p>
+<p>In this section we’ll take a look at other stimulus types.</p>
+<p>The exercises in this section give you fewer hints to make things a bit more challenging.
+If you need more clues, take a look at the previous pages and past examples.</p>
+<div class="section" id="multiple-images-using-html">
+<h2>Multiple images using HTML<a class="headerlink" href="#multiple-images-using-html" title="Permalink to this headline">¶</a></h2>
+<p>Using a HTML stimulus you can show text in different sizes, different colours, different fonts – you can
+do anything with a HTML stimulus that can be done on a web page! For example, you could use a HTML stimulus
+to show two images side-by-side:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">two_images</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;html-keyboard-response&#39;</span><span class="p">,</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="s1">&#39;&lt;img src=&quot;Dog1.jpg&quot;&gt; &lt;img src=&quot;Dog2.jpg&quot;&gt;&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="optional-exercise-multiple-images">
+<h3>Optional Exercise - multiple images<a class="headerlink" href="#optional-exercise-multiple-images" title="Permalink to this headline">¶</a></h3>
+<p>Copy the <code class="docutils literal notranslate"><span class="pre">factorial</span></code> experiment to make a new experiment. Modify <code class="docutils literal notranslate"><span class="pre">experiment.js</span></code> to show two images in the
+full-factorial design – in other words, your list of factors will have two lists of images in it. When you add
+these to the node above, it will look something like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">two_images</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;html-keyboard-response&#39;</span><span class="p">,</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+         <span class="k">return</span> <span class="p">(</span>
+             <span class="s1">&#39;&lt;img src=&quot;&#39;</span><span class="o">+</span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s2">&quot;image1&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&quot;&gt;&#39;</span>
+             <span class="o">+</span><span class="s1">&#39;&lt;img src=&quot;&#39;</span><span class="o">+</span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s2">&quot;image2&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&quot;&gt;&#39;</span>
+         <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Some notes on this:</p>
+<ul class="simple">
+<li><p>The parentheses inside the function are just to allow us to break the line
+by adding two strings using <code class="docutils literal notranslate"><span class="pre">+</span></code>. If we didn’t do this it would be a really
+long line (which is absolutely allowed in JavaScript, but really hard to read!)</p></li>
+<li><p>When using a single timeline variable with no modification, one can just use
+the <code class="docutils literal notranslate"><span class="pre">timelineVariable</span></code> function directly:</p></li>
+</ul>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">stimulus</span><span class="o">:</span> <span class="nx">timelineVariable</span><span class="p">(</span><span class="s1">&#39;myvariable&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>When using more than one timeline variable, or combining a timeline variable
+with other information, one must wrap it in <code class="docutils literal notranslate"><span class="pre">function()</span> <span class="pre">{</span> <span class="pre">....</span> <span class="pre">}</span></code> and also
+give <code class="docutils literal notranslate"><span class="pre">timelineVariable</span></code> an extra argument, <code class="docutils literal notranslate"><span class="pre">true</span></code>, as in the example above.</p></li>
+<li><p>There is another way to do this which doesn’t involve timeline variables.
+Instead, create a loop over the result of the factorial function to create
+a list of nodes. This may be easier to understand, and it’s good to know this
+approach as some experiment structures will require you to do this.</p></li>
+</ul>
+</div>
+<div class="section" id="solution">
+<h3>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h3>
+<p>Here is an <a class="reference internal" href="multiple_images.html#multiple-images"><span class="std std-ref">example solution</span></a> using the first approach
+(timeline variables).</p>
+<p>Here is an <a class="reference internal" href="multiple_images_loop.html#multiple-images-loop"><span class="std std-ref">example solution</span></a> using the second approach.</p>
+</div>
+</div>
+<div class="section" id="text-changes-using-html">
+<h2>Text changes using HTML<a class="headerlink" href="#text-changes-using-html" title="Permalink to this headline">¶</a></h2>
+<p>Normally, information about text size, colour, font etc. would go into the CSS file. In the web page there would
+be something like this:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;positivefeedback&quot;</span><span class="p">&gt;</span>Well done!<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>and in the CSS file, something like this:</p>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">positivefeedback</span> <span class="p">{</span>
+    <span class="k">color</span><span class="p">:</span> <span class="kc">green</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In experiments it’s often more expedient to put this directly into the HTML. You can do this using the <code class="docutils literal notranslate"><span class="pre">style</span></code>
+attribute:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">p</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;color: green&quot;</span><span class="p">&gt;</span>Well done!<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>CSS uses the American spelling for “color”. If you write “colour” it will be ignored!</p>
+</div>
+<div class="section" id="optional-exercise-stroop-list-approach">
+<h3>Optional Exercise – Stroop, list approach<a class="headerlink" href="#optional-exercise-stroop-list-approach" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Stroop_effect">Stroop effect</a> works as follows. In a <em>congruent</em> Stroop trial
+the name of a colour is printed in that colour, e.g.</p>
+<p style="color: red; font-size: x-large; font-family: sans; font-weight: bold;">red</p><p>In an <em>incongruent</em> trial, the name of a colour is printed in a different colour:</p>
+<p style="color: red; font-size: x-large; font-family: sans; font-weight: bold;">blue</p><p>The Stroop effect means that, on average, participants take longer to name the colour of the
+text in an incongruent trial than a congruent one.</p>
+<p>You could (as above) write another full-factorial experiment to implement a Stroop test.
+If you did this with four colours (for example) then a quarter of the trials would be congruent
+and three-quarters would be incongruent:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 26%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Colour</p></th>
+<th class="head"><p>Text</p></th>
+<th class="head"><p>Condition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>red</p></td>
+<td><p>red</p></td>
+<td><p>congruent</p></td>
+</tr>
+<tr class="row-odd"><td><p>red</p></td>
+<td><p>green</p></td>
+<td><p>incongruent</p></td>
+</tr>
+<tr class="row-even"><td><p>red</p></td>
+<td><p>blue</p></td>
+<td><p>incongruent</p></td>
+</tr>
+<tr class="row-odd"><td><p>red</p></td>
+<td><p>yellow</p></td>
+<td><p>incongruent</p></td>
+</tr>
+<tr class="row-even"><td><p>green</p></td>
+<td><p>red</p></td>
+<td><p>congruent</p></td>
+</tr>
+<tr class="row-odd"><td><p>green</p></td>
+<td><p>green</p></td>
+<td><p>incongruent</p></td>
+</tr>
+<tr class="row-even"><td><p>green</p></td>
+<td><p>blue</p></td>
+<td><p>incongruent</p></td>
+</tr>
+<tr class="row-odd"><td><p>green</p></td>
+<td><p>yellow</p></td>
+<td><p>incongruent</p></td>
+</tr>
+<tr class="row-even"><td><p>etc.</p></td>
+<td><p>etc.</p></td>
+<td><p>etc.</p></td>
+</tr>
+</tbody>
+</table>
+<p>In a real experiment you’d want to statistically compare the congruent and
+incongruent conditions – and for this it would be better to have half of each.</p>
+<p>The most straightforward way to do this would be to write a list yourself,
+with half congruent and half incongruent trials:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">stroop_variables</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="nx">colour</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="nx">condition</span><span class="o">:</span> <span class="s2">&quot;congruent&quot;</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="nx">colour</span><span class="o">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="nx">condition</span><span class="o">:</span> <span class="s2">&quot;incongruent&quot;</span> <span class="p">},</span>
+    <span class="p">....</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>You can use this the same way you use the output from the <code class="docutils literal notranslate"><span class="pre">factorial</span></code> function. Define a
+fixation node and a Stroop test node, using one of the approaches above, either:</p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">jsPsych.timelineVariable</span></code> where you need the <code class="docutils literal notranslate"><span class="pre">colour</span></code> and <code class="docutils literal notranslate"><span class="pre">text</span></code> values.</p></li>
+<li><p>Use a loop to accumulate a list of nodes.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">condition</span></code> can go in to the <code class="docutils literal notranslate"><span class="pre">data</span></code> field of the node, so you will see “congruent”
+and “incongruent” in the results.</p>
+<p>Once you’ve got this working, see if you can use <code class="docutils literal notranslate"><span class="pre">jsPsych.randomization.repeat</span></code> to
+show the trials in a random order.</p>
+</div>
+<div class="section" id="id1">
+<h3>Solution<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Here is an <a class="reference internal" href="stroop_timeline_variables.html#stroop-timeline-variables"><span class="std std-ref">example solution</span></a> using timeline variables.</p>
+<p>Here is an <a class="reference internal" href="stroop_loop.html#stroop-loop"><span class="std std-ref">example solution</span></a> using a loop.</p>
+</div>
+<div class="section" id="optional-exercise-stroop-automated-approach">
+<h3>Optional Exercise – Stroop, automated approach<a class="headerlink" href="#optional-exercise-stroop-automated-approach" title="Permalink to this headline">¶</a></h3>
+<p>Rather than having a fixed list of trials, you could generate an equal number of
+congruent and incongruent trials. First, write a function that generates a random congruent
+trial, and one that generates a random incongruent trial <a class="footnote-reference brackets" href="#random" id="id2">1</a>. Then, write a loop that
+adds one congruent and one incongruent trial to the timeline for each time around the loop.
+This will ensure that there are equal numbers of congruent and incongruent trials.</p>
+</div>
+<div class="section" id="id3">
+<h3>Solution<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Here is an <a class="reference internal" href="stroop_functions.html#stroop-functions"><span class="std std-ref">example solution</span></a> using functions.</p>
+<p class="rubric">Footnotes</p>
+<dl class="footnote brackets">
+<dt class="label" id="random"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>You can use <code class="docutils literal notranslate"><span class="pre">jsPsych.randomization.sampleWithoutReplacement</span></code> and
+<code class="docutils literal notranslate"><span class="pre">jsPsych.randomization.sampleWithReplacement</span></code> to choose colours and words.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="web.html">01 About the Web</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/stimuli.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

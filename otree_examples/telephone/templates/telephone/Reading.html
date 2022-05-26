@@ -1,0 +1,44 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}T{% endblock %}
+
+{% block content %}
+
+
+<div id="word">
+</div>
+
+{% next_button %}
+
+<script>
+/* This script must be at the bottom so that both the div
+   containing the word and the Next button are available;
+   we use them both in the code below.
+*/
+function buttons_enabled(enable) {
+    // enable or disable all buttons on the page 
+    var button = document.getElementsByTagName("button");
+    button.disabled = enable;
+}
+// display the words in a list one at a time
+var words = "{{ last_response }}".split(" ");
+var current_word = 0;
+var word_el = document.getElementById("word");
+var ms_per_word = 500;
+buttons_enabled(false);
+window.setInterval(
+    function() {
+        if (current_word === words.length) {
+            buttons_enabled(true);
+        } else {
+            word_el.innerHTML = words[current_word];
+            current_word += 1;
+        }
+    },
+    ms_per_word
+);
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,83 @@
+9.15: Arrivals and informal chat.
+
+9.30-9.45: Welcome and overview of the days.
+
+9.45-10.40: The online experiments landscape. Pros and cons, suitability, scalability, programming experience required. oTree, jsPsych, Pavlovia, OpenSesame.
+
+~15 mins slides
+~25 mins demos
+~15 mins questions
+
+10.40-10.50: Break
+
+10.50-11.00: How to choose the software you use
+
+~5 mins talk
+~5 mins questions
+
+11.00-11.40: Online things to think about: CSS, HTML, JavaScript, how websites work.
+
+~30 mins talk
+~10 mins questions
+
+11.30-11.40: Break
+
+11.40-12.30: oTree introduction + special Python things.
+
+~20 mins intro and concepts
+~10 mins questions
+~20 mins first simple walk through oTree example (a form)
+
+12.30-13.00: Lunch (away from screen)
+
+13.00-13.30: Informal chat (optional)
+
+13.30-16.00: Build own toy experiment in oTree and play around. Break: 14.30-14.45.
+135 mins
+
+~10 mins intro and walkthrough of simple app
+~15 mins breakout for catchup / troubleshooting upload process
+25
+
+~5 mins explaining first exercise
+~20 mins breakout for first exercise
+~10 mins explaining solution / questions
+60
+
+~5 mins explaining second exercise
+~30 mins breakout for second exercise
+~10 mins explaining solution / questions
+105
+
+~20 mins working on further enhancements to example
+~10 mins looking at the database
+135
+
+Friday
+
+9.15: Arrivals and informal chat.
+
+9.30: jsPsych introduction + special JavaScript things.
+
+~10 mins what can jsPsych do / not do?, other preliminaries
+~10 mins jsPsych basic structure notes/timeline/init
+~15 mins repetition and randomisation, factorial
+~10 mins the rest
+
+
+10.15-12.30: Build own toy experiment in jsPsych. Break: 11.15-11.30.
+
+~10 minutes upload test experiment, make sure everyone can run it
+~
+
+12.30-13.00: Lunch (away from screen)
+
+13.00-13.30: Informal chat (optional)
+
+13.30-14.30: Recruiting participants: Amazon Mechanical Turk, Prolific, etc.
+
+14.30-14.40: Break.
+
+14:40-15.50: Practical applications at AU: Servers, GDPR, database control.
+
+15.50-16.00: Goodbye and thank you.

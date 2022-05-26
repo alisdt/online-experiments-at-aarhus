@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>The structure of a jsPsych experiment</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="the-structure-of-a-jspsych-experiment">
+<h1>The structure of a jsPsych experiment<a class="headerlink" href="#the-structure-of-a-jspsych-experiment" title="Permalink to this headline">¶</a></h1>
+<p>As you know, a jsPsych experiment is a series of nodes.
+Usually one node corresponds to one presentation to the
+participant. So far in our test experiment, we’ve only
+got one node which says hello (or shows an image, if you
+changed it to do that). Let’s add some more!</p>
+<div class="section" id="putting-the-code-in-its-own-file">
+<h2>Putting the code in its own file<a class="headerlink" href="#putting-the-code-in-its-own-file" title="Permalink to this headline">¶</a></h2>
+<p>First, we’re going to give our experiment code its own file. We’ll
+create a new file just for the JavaScript code, and copy the code into
+that file.</p>
+<p>Open a new file in the same folder as <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code>. This will be
+called <code class="docutils literal notranslate"><span class="pre">experiment.js</span></code>. Now in <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code>, put the following
+between <code class="docutils literal notranslate"><span class="pre">&lt;head&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;/head&gt;</span></code>, <em>after</em> all the other lines starting
+with <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code>:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;experiment.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>This tells the web browser to load code from the file <code class="docutils literal notranslate"><span class="pre">experiment.js</span></code>.</p>
+<p>Now cut all the code you wrote in <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code> file between
+<code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;/script&gt;</span></code>, and paste it into <code class="docutils literal notranslate"><span class="pre">experiment.js</span></code>.
+You can now delete the empty <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;&lt;/script&gt;</span></code> in <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code>.</p>
+</div>
+<div class="section" id="adding-more-images">
+<h2>Adding more images<a class="headerlink" href="#adding-more-images" title="Permalink to this headline">¶</a></h2>
+<p>Let’s add another node to your experiment.
+You’ll add it just the same way, with another bit of code something
+like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">image2_trial</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;image-keyboard-response&#39;</span><span class="p">,</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="s1">&#39;image2.jpg&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Of course for this you need another image to upload to the server!
+There’s a test set
+of images <a class="reference external" href="images.zip">linked here</a> (cats, dogs and horses), or of
+course you can choose another image for yourself.</p>
+<p>Make sure that the name after <code class="docutils literal notranslate"><span class="pre">stimulus:</span></code> matches the exact name of
+the image on the server.</p>
+<p>You can then add this image to the timeline with:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">timeline</span><span class="o">:</span> <span class="p">[</span><span class="nx">hello_trial</span><span class="p">,</span> <span class="nx">image2_trial</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Your code might not look exactly like this – the two names between the
+<code class="docutils literal notranslate"><span class="pre">[]</span></code> should match the names you used earlier in the code.</p>
+<p>Test this by reloading the experiment page in your web browser.
+You should see two images displayed, and each time you can press a key
+to move on. Remember
+you might need to do a “hard reload”, here’s a reminder:</p>
+<div class="line-block">
+<div class="line">Firefox: ⌘-shift-R on Mac, ctrl-shift-R on Windows or Linux</div>
+<div class="line">Chrome: ⌘-shift-R on Mac, ctrl-F5 on Windows or Linux</div>
+<div class="line">Safari: ⌘-option-E</div>
+<div class="line">Internet Explorer or Edge: ctrl-F5</div>
+</div>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>In a future session we’ll look at how to store results on the server.
+For now, we’ll display them on the screen at the end of the experiment.</p>
+<p>You can do this by adding another line to the call to <code class="docutils literal notranslate"><span class="pre">jsPsych.init</span></code>.
+Add the code:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">on_finish</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">displayData</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>So now, the whole of that part of the code should look like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="p">[</span><span class="nx">hello_trial</span><span class="p">,</span> <span class="nx">image2_trial</span><span class="p">],</span>
+    <span class="nx">on_finish</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">displayData</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Again, test this by reloading the page in your browser.</p>
+<p>This time, you should see the two images, then at the end the results.</p>
+<p>They look something like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;rt&quot;</span><span class="o">:</span> <span class="mi">1239</span><span class="p">,</span>
+        <span class="s2">&quot;stimulus&quot;</span><span class="o">:</span> <span class="s2">&quot;Dog1.jpg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;key_press&quot;</span><span class="o">:</span> <span class="mi">32</span><span class="p">,</span>
+        <span class="s2">&quot;trial_type&quot;</span><span class="o">:</span> <span class="s2">&quot;image-keyboard-response&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;trial_index&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;time_elapsed&quot;</span><span class="o">:</span> <span class="mi">1241</span><span class="p">,</span>
+        <span class="s2">&quot;internal_node_id&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0-0.0&quot;</span>
+    <span class="p">},</span>
+    <span class="p">....</span>
+</pre></div>
+</div>
+<p>We’ll go through this in more detail later on, but you can already see
+a couple of familiar features there. Firstly, the information in the node
+(the type and stimulus) are there. Secondly, the reaction time (<code class="docutils literal notranslate"><span class="pre">rt</span></code>) is
+there. Finally, <code class="docutils literal notranslate"><span class="pre">key_press</span></code> tells you what key was pressed.</p>
+<div class="section" id="key-codes">
+<h3>Key codes<a class="headerlink" href="#key-codes" title="Permalink to this headline">¶</a></h3>
+<p>This is not
+straightforward as JavaScript gives key codes rather than just showing the
+letter on the key. There are plenty of web pages that will tell you which
+code corresponds to which key, for example
+<a class="reference external" href="https://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes">this one</a>.</p>
+<p>You can also ask jsPsych to give you the
+<a class="reference external" href="http://www.jspsych.org/core_library/jspsych-pluginAPI/#jspsychpluginapiconvertkeycharactertokeycode">code corresponding to a character</a>,
+or the <a class="reference external" href="http://www.jspsych.org/core_library/jspsych-pluginAPI/#jspsychpluginapiconvertkeycodetokeycharacter">character corresponding to a code</a>.</p>
+<p>It’s always wise to test with the layout of keyboard and input language that
+your participants will use, so bear this in mind.</p>
+</div>
+</div>
+<div class="section" id="repetition">
+<h2>Repetition<a class="headerlink" href="#repetition" title="Permalink to this headline">¶</a></h2>
+<p>What if you want to repeat a set of trials several times? jsPsych allows
+you to do this without having to type out all the repetitions. After your
+node definitions (<code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">hello_trial</span> <span class="pre">=</span> <span class="pre">{</span> <span class="pre">....</span></code>) add a line:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">trials</span> <span class="o">=</span> <span class="p">[</span><span class="nx">hello_trial</span><span class="p">,</span> <span class="nx">image2_trial</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>Again, if you gave the two nodes different names, use those names instead.</p>
+<p>This puts your two nodes into a list, called <code class="docutils literal notranslate"><span class="pre">trials</span></code>. Now add a line:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">repeated_trials</span> <span class="o">=</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">randomization</span><span class="p">.</span><span class="nx">repeat</span><span class="p">(</span><span class="nx">trials</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This repeats the list <code class="docutils literal notranslate"><span class="pre">trials</span></code> five times, randomises it, and puts the
+result in a new list called <code class="docutils literal notranslate"><span class="pre">repeated_trials</span></code>.</p>
+<p>Finally, we use this new list as our timeline. Change the <code class="docutils literal notranslate"><span class="pre">jsPsych.init</span></code>
+call to this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="nx">repeated_trials</span><span class="p">,</span>
+    <span class="nx">on_finish</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">displayData</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Now reload and run your experiment again. You should see ten trials in total,
+with five of each image.</p>
+<p>Once you’ve finished, your code should look like <a class="reference internal" href="repetition.html#repetition"><span class="std std-ref">this</span></a>. (Don’t look at
+this until you’ve taken a look at the console errors and tried to fix it, though!)</p>
+</div>
+<div class="section" id="factorial-design">
+<h2>Factorial design<a class="headerlink" href="#factorial-design" title="Permalink to this headline">¶</a></h2>
+<p>jsPsych also has a function which will create a full-factorial design for you. A
+full-factorial design is one which
+tests all possible combinations of a set of parameters.</p>
+<p>Create a new experiment by copying the “hello” folder and its contents. Rename this
+new folder <code class="docutils literal notranslate"><span class="pre">factorial</span></code>.</p>
+<p>This means that your new experiment will appear in a different place. Take the link
+for the first experiment and replace <code class="docutils literal notranslate"><span class="pre">hello</span></code> with <code class="docutils literal notranslate"><span class="pre">factorial</span></code>.</p>
+<p>Let’s create a factorial design over a set of images and a set of stimulus durations.</p>
+<p>Look at the
+<a class="reference external" href="http://www.jspsych.org/plugins/jspsych-image-keyboard-response/">documentation for the image-keyboard-response plugin</a>.
+There is a <code class="docutils literal notranslate"><span class="pre">stimulus_duration</span></code> parameter which controls the duration of the stimulus.</p>
+<p>So, we can make a full-factorial design with:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">factors</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;Dog1.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;Dog2.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;Dog3.jpg&#39;</span><span class="p">],</span>
+    <span class="nx">stimulus_duration</span><span class="o">:</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">1200</span><span class="p">]</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Start off by deleting the contents of <code class="docutils literal notranslate"><span class="pre">experiment.js</span></code> in your new folder, and add this code.
+Now add:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">factorial_values</span> <span class="o">=</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">randomization</span><span class="p">.</span><span class="nx">factorial</span><span class="p">(</span><span class="nx">factors</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">factorial_values</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>This won’t show anything in the main window of the browser. Instead,
+<code class="docutils literal notranslate"><span class="pre">console.log</span></code> sends text to the console that we saw earlier.
+Open up the console in Developer Tools and reload the page.
+You can see that it’s generated all possible combinations of stimulus and duration, as we wanted.
+These are not fully-formed jsPsych nodes though, as they need some extra information. At the
+very least they need a <code class="docutils literal notranslate"><span class="pre">type</span></code>. Usually there’s also a <code class="docutils literal notranslate"><span class="pre">prompt</span></code> parameter, giving some
+explanatory text telling the participant what they need to do. We can use timeline variables to
+use the <code class="docutils literal notranslate"><span class="pre">stimulus</span></code> and <code class="docutils literal notranslate"><span class="pre">stimulus_duration</span></code> values that we generated.</p>
+</div>
+<div class="section" id="timeline-variables">
+<h2>Timeline variables<a class="headerlink" href="#timeline-variables" title="Permalink to this headline">¶</a></h2>
+<p>You can think of timeline variables like a table that jsPsych reads from to generate a set of repetitions.
+As a table, <code class="docutils literal notranslate"><span class="pre">factorial_values</span></code> would look like this:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>stimulus</p></th>
+<th class="head"><p>stimulus_duration</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Dog2.jpg</p></td>
+<td><p>400</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dog1.jpg</p></td>
+<td><p>1200</p></td>
+</tr>
+<tr class="row-even"><td><p>Dog1.jpg</p></td>
+<td><p>800</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dog3.jpg</p></td>
+<td><p>800</p></td>
+</tr>
+<tr class="row-even"><td><p>etc.</p></td>
+<td><p>etc.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Let’s write a node which uses these variables. Instead of giving numbers or text
+for <code class="docutils literal notranslate"><span class="pre">stimulus</span></code> and <code class="docutils literal notranslate"><span class="pre">stimulus_duration</span></code>, we’ll use jsPsych timeline variables,
+which will substitute values from the table.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">trial</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;image-keyboard-response&#39;</span><span class="p">,</span>
+    <span class="nx">prompt</span><span class="o">:</span> <span class="s1">&#39;&lt;p&gt;Press a key!&lt;/p&gt;&#39;</span><span class="p">,</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s1">&#39;stimulus&#39;</span><span class="p">),</span>
+    <span class="nx">stimulus_duration</span><span class="o">:</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s1">&#39;stimulus_duration&#39;</span><span class="p">)</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Now we can link the table up to this using the <code class="docutils literal notranslate"><span class="pre">timeline_variables</span></code> property:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">trials_with_variables</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="p">[</span><span class="nx">trial</span><span class="p">],</span>
+    <span class="nx">timeline_variables</span><span class="o">:</span> <span class="nx">factorial_values</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>This bit says to jsPsych, “please use the node <code class="docutils literal notranslate"><span class="pre">trial</span></code>, and use <code class="docutils literal notranslate"><span class="pre">factorial_values</span></code>
+to supply the values”.</p>
+<p>Finally, as before, we must use <code class="docutils literal notranslate"><span class="pre">jsPsych.init</span></code> to start the experiment:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="p">[</span><span class="nx">trials_with_variables</span><span class="p">],</span>
+    <span class="nx">on_finish</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">displayData</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Once you’ve finished the code should look like <a class="reference internal" href="factorial.html#factorial"><span class="std std-ref">this</span></a>. As before,
+try your best to finish this on your own first, solving any problems by asking for help,
+looking at the code, or using Developer Tools.</p>
+</div>
+<div class="section" id="exercise-instructions">
+<h2>Exercise: Instructions<a class="headerlink" href="#exercise-instructions" title="Permalink to this headline">¶</a></h2>
+<p>Add a node to the start of the experiment which shows some instructions.
+This should go in the main timeline (in jsPsych.init).</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">html-keyboard-response</span></code> plugin, which you saw in the “Hello World!”
+example right at the start, or you can use the <code class="docutils literal notranslate"><span class="pre">instructions</span></code> plugin
+(<a class="reference external" href="https://www.jspsych.org/plugins/jspsych-instructions/">documented here</a>). Remember that
+when you add a plugin to an experiment, there must be a corresponding <code class="docutils literal notranslate"><span class="pre">&lt;script</span> <span class="pre">src=&quot;....&quot;&gt;&lt;/script&gt;</span></code>
+in <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code>.</p>
+</div>
+<div class="section" id="exercise-fixation-cross">
+<h2>Exercise: Fixation cross<a class="headerlink" href="#exercise-fixation-cross" title="Permalink to this headline">¶</a></h2>
+<p>Add a fixation cross before each trial. This should go in the timeline in <code class="docutils literal notranslate"><span class="pre">trials_with_variables</span></code>.</p>
+<p>So that code will change to look like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">trials_with_variables</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="p">[</span><span class="nx">fixation</span><span class="p">,</span> <span class="nx">trial</span><span class="p">],</span>
+    <span class="nx">timeline_variables</span><span class="o">:</span> <span class="nx">factorial_values</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>You then need to define a new node, <code class="docutils literal notranslate"><span class="pre">fixation</span></code>, somewhere above that in the code.</p>
+</div>
+<div class="section" id="extra-exercise-variable-fixation-duration">
+<h2>Extra exercise: variable fixation duration<a class="headerlink" href="#extra-exercise-variable-fixation-duration" title="Permalink to this headline">¶</a></h2>
+<p>Add a new variable to the factorial design, giving two different fixation durations.</p>
+<p>Change the definition of your fixation node to use this new variable.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="web.html">01 About the Web</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/jspsych.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

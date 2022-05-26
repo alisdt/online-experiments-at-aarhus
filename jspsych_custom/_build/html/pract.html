@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>Developer tools and editing files</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="developer-tools-and-editing-files">
+<h1>Developer tools and editing files<a class="headerlink" href="#developer-tools-and-editing-files" title="Permalink to this headline">¶</a></h1>
+<p>In this section we’ll take a look at some practicalities
+associated with web experiments in general, and CyberDuck
+and our server in particular.</p>
+<div class="section" id="editing-files-directly">
+<h2>Editing files directly<a class="headerlink" href="#editing-files-directly" title="Permalink to this headline">¶</a></h2>
+<p>CyberDuck can allow you to edit files on the server directly.
+What it actually does is download a copy, and open it in your editing program.
+It then uploads the file automatically when it changes.</p>
+<p>Open CyberDuck, and find the Preferences window with
+Edit → Preferences on Windows or CyberDuck → Preferences on Mac.
+Then click on “Editor” at the top. You should see this:</p>
+<a class="reference internal image-reference" href="_images/choose_editor_1.png"><img alt="_images/choose_editor_1.png" src="_images/choose_editor_1.png" style="width: 90%;" /></a>
+<p>In the dropdown menu, choose your text editor.
+Check the box “Always use this application”.</p>
+<p>If your text editor is not there,
+you’ll need to select “Choose ….” and find it. (You only
+need to do this if it’s not there – if your chosen text editor
+was in the list, you’ve finished).</p>
+<p>Here are a couple of examples.</p>
+<p>Atom can be quite difficult to find on
+Windows as it’s in a hidden folder. Go to the folder</p>
+<blockquote>
+<div><p>C:\Users\&lt;your username&gt;\AppData\Local\atom</p>
+</div></blockquote>
+<p>and choose the file called “atom”:</p>
+<a class="reference internal image-reference" href="_images/choose_editor_2.png"><img alt="_images/choose_editor_2.png" src="_images/choose_editor_2.png" style="width: 90%;" /></a>
+<p>Notepad++ can be found in Program Files:</p>
+<a class="reference internal image-reference" href="_images/choose_editor_3.png"><img alt="_images/choose_editor_3.png" src="_images/choose_editor_3.png" style="width: 90%;" /></a>
+<p>Now you can edit a file directly by selecting it and clicking on the “Edit” button in the toolbar.</p>
+<a class="reference internal image-reference" href="_images/edit.png"><img alt="_images/edit.png" src="_images/edit.png" style="width: 90%;" /></a>
+</div>
+<div class="section" id="developer-tools">
+<h2>Developer Tools<a class="headerlink" href="#developer-tools" title="Permalink to this headline">¶</a></h2>
+<p>When writing any computer program, it’s always good to have
+some tools to help you find out what’s going on. This is
+particularly important when something goes wrong! For an
+online experiment in JavaScript, you can use the
+web developer tools in your browser. All recent versions of
+browsers have these tools built in.</p>
+<p>First, here’s how to open developer tools for your browser:</p>
+<dl class="simple">
+<dt>Firefox</dt><dd><p>In the menu, Web Developer → Toggle Tools (or Ctrl-Shift-I)</p>
+</dd>
+<dt>Chrome</dt><dd><p>In the menu, More Tools → Developer Tools (or Ctrl-Shift-I)</p>
+</dd>
+<dt>Internet Explorer/Edge</dt><dd><p>Press F12 to start Developer tools</p>
+</dd>
+<dt>Safari</dt><dd><p>Preferences → Advanced and check “Show Develop menu in menu bar”.
+Then Develop → Show Web Inspector</p>
+</dd>
+</dl>
+<p>In my examples I’ll use Firefox, but these are all fairly similar.</p>
+<p>Go to the page for your experiment – use the link for the
+uploaded copy on the server, not the copy on your computer.</p>
+<p>Now go to the web page for the example experiment
+you created last week. Enable Developer Tools (see the list above) and
+reload the page. You’ll see something like this:</p>
+<a class="reference internal image-reference" href="_images/dev_tools.png"><img alt="_images/dev_tools.png" src="_images/dev_tools.png" style="width: 90%;" /></a>
+<div class="section" id="the-console">
+<h3>The console<a class="headerlink" href="#the-console" title="Permalink to this headline">¶</a></h3>
+<p>Click on the tab marked “Console”. This contains messages from your web browser.
+Most useful are the errors! Open your <cite>experiment.html</cite> file and break the code.</p>
+<blockquote>
+<div><p>Yes, I’m actually telling you to break the code! The easiest way is to delete
+a bracket – <code class="docutils literal notranslate"><span class="pre">(</span></code>, <code class="docutils literal notranslate"><span class="pre">[</span></code> or <code class="docutils literal notranslate"><span class="pre">{</span></code>, as if these are not in matching pairs that will cause an
+error.</p>
+</div></blockquote>
+<p>Now reload the page. You should see something like this:</p>
+<a class="reference internal image-reference" href="_images/dev_tools_error.png"><img alt="_images/dev_tools_error.png" src="_images/dev_tools_error.png" style="width: 90%;" /></a>
+<p>There’s an error reported in the console, in red. This will give you a clue as
+to where the problem is! You can click on the links on the right which will show
+you the relevant parts of the code. While error messages can be a little cryptic,
+there’s usually something which will help, like “missing }”.</p>
+<p>Now fix your experiment!</p>
+</div>
+<div class="section" id="the-debugger">
+<h3>The debugger<a class="headerlink" href="#the-debugger" title="Permalink to this headline">¶</a></h3>
+<p>These tools can also allow you to step through the code line-by-line. Now click
+on the tab marked “Debugger” or “Sources”. You’ll see something like this:</p>
+<a class="reference internal image-reference" href="_images/debugger.png"><img alt="_images/debugger.png" src="_images/debugger.png" style="width: 90%;" /></a>
+<p>Here you can see your code, and watch it run. Click in the margin next to the code,
+on the line:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+</pre></div>
+</div>
+<p>Now reload the page. The program has stopped on that line. The point that you chose
+by clicking in the margin is called a <strong>breakpoint</strong>.</p>
+<a class="reference internal image-reference" href="_images/debugger_stopped.png"><img alt="_images/debugger_stopped.png" src="_images/debugger_stopped.png" style="width: 90%;" /></a>
+<p>On the right there’s a sidebar called “Scopes”. (This has other names in other browsers,
+but there should be a list of names and values somewhere). Here you’ll be able to see what
+value different variables have. Some of these are built in to the browser, or part of the
+internal workings of jsPsych – don’t worry about these for now.</p>
+<p>The important thing to note is that you can see the value for the node (in the tutorial,
+this is called “hello_trial”). As you build up a more complex program there will be
+many such variables, and their values can change as the program runs, so it’s good
+to know that you can inspect this as the program runs.</p>
+<p>You can also continue running the program. These tools, or something like them, will be
+near the code:</p>
+<a class="reference internal image-reference" href="_images/debugger_controls.png"><img alt="_images/debugger_controls.png" src="_images/debugger_controls.png" style="width: 20%;" /></a>
+<p>The first of these controls (the triangle or “play button”)
+lets the program continue running until it finishes, or until another breakpoint is reached.
+The second steps through the code gradually, one line at a time.</p>
+<p>That concludes the introduction to Developer Tools. Don’t worry if you didn’t understand
+everything on the screen when it was running – the important thing is to know that it’s
+there to help you when your program isn’t working!</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="web.html">01 About the Web</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/pract.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

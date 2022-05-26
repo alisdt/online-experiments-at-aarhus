@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>Line-by-line data saving example</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="line-by-line-data-saving-example">
+<span id="linebyline"></span><h1>Line-by-line data saving example<a class="headerlink" href="#line-by-line-data-saving-example" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure that your HTML file loads two plugins:
+<code class="docutils literal notranslate"><span class="pre">jspsych-html-keyboard-response</span></code> and <code class="docutils literal notranslate"><span class="pre">jspsych-image-keyboard-response</span></code>.</p>
+</div>
+<p>You should have <code class="docutils literal notranslate"><span class="pre">record_result.php</span></code> on the server to receive the data. See <a class="reference internal" href="record_result.html"><span class="doc">this page</span></a>.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">factors</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;Dog1.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;Dog2.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;Dog3.jpg&#39;</span><span class="p">],</span>
+    <span class="nx">stimulus_duration</span><span class="o">:</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">1200</span><span class="p">],</span>
+    <span class="nx">fixation_duration</span><span class="o">:</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">1500</span><span class="p">]</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">factorial_values</span> <span class="o">=</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">randomization</span><span class="p">.</span><span class="nx">factorial</span><span class="p">(</span><span class="nx">factors</span><span class="p">);</span>
+
+<span class="c1">// adding a &#39;data&#39; field gives us extra values which:</span>
+<span class="c1">// - are saved automatically if we save the whole dataset at the end</span>
+<span class="c1">// - are accessible in saveDataLine if we save line-by-line</span>
+<span class="kd">var</span> <span class="nx">fixation</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;html-keyboard-response&#39;</span><span class="p">,</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span>
+    <span class="nx">trial_duration</span><span class="o">:</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s1">&#39;fixation_duration&#39;</span><span class="p">),</span>
+    <span class="nx">response_ends_trial</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;fixation&#39;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// fixation_duration is put into the &#39;data&#39; field for this node as this</span>
+<span class="c1">// is the one we report at the end -- fixation nodes are filtered out</span>
+<span class="kd">var</span> <span class="nx">trial</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;image-keyboard-response&#39;</span><span class="p">,</span>
+    <span class="nx">prompt</span><span class="o">:</span> <span class="s1">&#39;&lt;p&gt;Press a key!&lt;/p&gt;&#39;</span><span class="p">,</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s1">&#39;stimulus&#39;</span><span class="p">),</span>
+    <span class="nx">stimulus_duration</span><span class="o">:</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s1">&#39;stimulus_duration&#39;</span><span class="p">),</span>
+    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;trial&#39;</span><span class="p">,</span>
+        <span class="nx">stimulus_duration</span><span class="o">:</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s1">&#39;stimulus_duration&#39;</span><span class="p">),</span>
+        <span class="nx">fixation_duration</span><span class="o">:</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s1">&#39;fixation_duration&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">trials_with_variables</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="p">[</span><span class="nx">fixation</span><span class="p">,</span> <span class="nx">trial</span><span class="p">],</span>
+    <span class="nx">timeline_variables</span><span class="o">:</span> <span class="nx">factorial_values</span>
+<span class="p">};</span>
+
+<span class="kd">function</span> <span class="nx">saveData</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">data_in</span><span class="p">){</span>
+    <span class="c1">// this is exactly the same as in the previous example</span>
+    <span class="c1">// (all it does is send data to the server!)</span>
+    <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">&#39;record_result.php&#39;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">data_to_send</span> <span class="o">=</span> <span class="p">{</span><span class="nx">filename</span><span class="o">:</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">filedata</span><span class="o">:</span> <span class="nx">data_in</span><span class="p">};</span>
+    <span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span>
+        <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+        <span class="nx">body</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data_to_send</span><span class="p">),</span>
+        <span class="nx">headers</span><span class="o">:</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">({</span>
+                <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span>
+        <span class="p">})</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">saveDataLine</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// if this isn&#39;t a trial node, return from the function (i.e. no action)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">type</span> <span class="o">!=</span> <span class="s1">&#39;trial&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// choose the data we want to save</span>
+    <span class="kd">var</span> <span class="nx">data_to_save</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nx">data</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">stimulus</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">stimulus_duration</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">fixation_duration</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">rt</span>
+    <span class="p">];</span>
+    <span class="c1">// join these with commas and add a newline</span>
+    <span class="kd">var</span> <span class="nx">line</span> <span class="o">=</span> <span class="nx">data_to_save</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;\n&quot;</span><span class="p">;</span>
+    <span class="nx">saveData</span><span class="p">(</span><span class="s2">&quot;test.csv&quot;</span><span class="p">,</span> <span class="nx">line</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">jsPsych</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="p">[</span><span class="nx">trials_with_variables</span><span class="p">],</span>
+    <span class="nx">on_data_update</span><span class="o">:</span> <span class="nx">saveDataLine</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="web.html">01 About the Web</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/linebyline.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,5 @@
+set ssl:check-hostname false
+user sftp://c6670855@c6670855.myzen.co.uk
+open ftp.c6670855.myzen.co.uk
+mput *.html *.js *.css _static/* _templates/* -d -O public_html/jspsych_aarhus
+

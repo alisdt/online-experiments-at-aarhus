@@ -1,0 +1,40 @@
+Lesson plan
+
+1. The basics
+
+- what are HTML / CSS / JavaScript
+- what does the server do, vs. what the client does
+- hello world experiment
+- what is a node?
+- what are jsPsych plugins?
+
+2. Simple experiment
+
+- RT experiment
+- 2AFC experiment
+- Advanced: how to show RT as feedback
+
+3. Some JavaScript
+
+- walkthrough of a "vanilla" page that does something
+  (show clock? pong game? scrolling text?)
+- example of if-elseif-else
+- example of while
+- example of for
+- example of functions
+
+4. Generating nodes
+
+- sometimes we want to make lots of similar nodes
+- makes sense to use a loop to construct the nodes
+- we can put it in a function too
+- self-paced reading example
+
+5. More complex example?
+
+------------
+
+Stuff to cover later:
+
+- key code mapping
+-

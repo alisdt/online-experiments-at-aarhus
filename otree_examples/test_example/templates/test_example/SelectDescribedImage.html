@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}Title{% endblock %}
+
+{% block content %}
+
+Select the image described by: {{ group.description }}
+
+<div>
+    <button name="image_selected" value="1">
+        <img src="https://tullo.co.uk/au/im/Dog1.jpg">
+    </button>
+    <button name="image_selected" value="2">
+        <img src="https://tullo.co.uk/au/im/Dog2.jpg">
+    </button>
+    <button name="image_selected" value="3">
+        <img src="https://tullo.co.uk/au/im/Dog3.jpg">
+    </button>
+</div>
+
+{% endblock %}

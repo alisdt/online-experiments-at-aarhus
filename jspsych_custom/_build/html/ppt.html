@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>Allocating participant and condition numbers</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="allocating-participant-and-condition-numbers">
+<span id="ppt"></span><h1>Allocating participant and condition numbers<a class="headerlink" href="#allocating-participant-and-condition-numbers" title="Permalink to this headline">¶</a></h1>
+<p>How can participant IDs be allocated to participants in an online experiment?
+Sequential participant IDs are the best to deal with,
+as these will allow us to counterbalance between a number of conditions.</p>
+<p>All of the code we’ve written for the experiment so far will only run on the
+participant’s computer. The participant’s computer <em>can’t</em> allocate a sequential
+ID, as it doesn’t know anything about the other participants. For that, we need
+the server, as it can keep track of IDs that have already been allocated.</p>
+<div class="section" id="back-to-get">
+<h2>Back to GET<a class="headerlink" href="#back-to-get" title="Permalink to this headline">¶</a></h2>
+<p>The HTTP GET method, which allows us to
+pass parameters along to web pages. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>http://example.com/page?colour=red&amp;size=3
+</pre></div>
+</div>
+<p>What if it looked like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>http://example.com/experiment.html?participant=12
+</pre></div>
+</div>
+<p>We can use this method to pass a participant number to jsPsych, and it has a very
+convenient way of receiving it.</p>
+<p>Make another copy of the latest version of your experiment and call it <code class="docutils literal notranslate"><span class="pre">allocator</span></code>.</p>
+<p>Now right at the top of <code class="docutils literal notranslate"><span class="pre">experiment.js</span></code>, add this code:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">participant_id</span> <span class="o">=</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">getURLVariable</span><span class="p">(</span><span class="s1">&#39;participant&#39;</span><span class="p">);</span>
+<span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">addProperties</span><span class="p">({</span><span class="nx">participant</span><span class="o">:</span> <span class="nx">participant_id</span><span class="p">});</span>
+</pre></div>
+</div>
+<p>In your web browser, load up the new copy of the experiment. In your browser, at the
+end of the URL, add a participant number as above. So it will look something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>https://&lt;name&gt;.cogsciexperiment.au.dk/allocator/experiment.html?participant=123
+</pre></div>
+</div>
+<p>Complete the experiment. When you look at the data, you should see a new column
+called “participant”, equal to the number that you entered.</p>
+</div>
+<div class="section" id="where-should-participant-numbers-come-from">
+<h2>Where should participant numbers come from?<a class="headerlink" href="#where-should-participant-numbers-come-from" title="Permalink to this headline">¶</a></h2>
+<p>There are two possibilities here. One is that the participant will be sent from some
+external service (e.g. Amazon MTurk or Prolific, or some survey software) and there
+will already be an ID in the URL.</p>
+<p>We can also create our own small program on the server which forwards participants
+to the experiment, with an ID. Open a new file called <code class="docutils literal notranslate"><span class="pre">participant_id_allocator.php</span></code>
+and copy this code into it:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+<span class="nv">$id_filename</span> <span class="o">=</span> <span class="s1">&#39;/var/www/server_data/participant_id.txt&#39;</span><span class="p">;</span>
+<span class="nv">$destination</span> <span class="o">=</span> <span class="s1">&#39;experiment.html?participant=&#39;</span><span class="p">;</span>
+<span class="nv">$last_id</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$id_filename</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$last_id</span> <span class="o">===</span> <span class="k">FALSE</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nv">$id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="nv">$id</span> <span class="o">=</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span><span class="nv">$last_id</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nv">$id</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nb">file_put_contents</span><span class="p">(</span><span class="nv">$id_filename</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
+<span class="nb">header</span><span class="p">(</span><span class="s1">&#39;Location: &#39;</span><span class="o">.</span><span class="nv">$destination</span><span class="o">.</span><span class="nv">$id</span><span class="p">);</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>You may need to change <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code> above to match the HTML file in your
+own experiment.</p>
+<p>This code will:</p>
+<ul class="simple">
+<li><p>Try to read a file in <code class="docutils literal notranslate"><span class="pre">server_data</span></code> called <code class="docutils literal notranslate"><span class="pre">participant_id.txt</span></code></p></li>
+<li><p>If the file doesn’t exist, set the variable <code class="docutils literal notranslate"><span class="pre">$id</span></code> to zero</p></li>
+<li><p>If the file does exist, open it and interpret the contents as a whole number</p></li>
+<li><p>Add one to <code class="docutils literal notranslate"><span class="pre">$id</span></code></p></li>
+<li><p>Write <code class="docutils literal notranslate"><span class="pre">$id</span></code> to <code class="docutils literal notranslate"><span class="pre">participant_id.txt</span></code></p></li>
+<li><p>Redirect to a given location (in this case <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code>) with the participant ID
+added as a GET parameter.</p></li>
+</ul>
+<p>The file <code class="docutils literal notranslate"><span class="pre">participant_id.txt</span></code> should always contain the last ID that was used. Every
+time this is accessed (and the program runs), it will increase the ID by 1, and forward
+to the experiment with the new ID.</p>
+<p>You should be able to go to</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">name</span><span class="o">&gt;.</span><span class="n">cogsciexperiment</span><span class="o">.</span><span class="n">au</span><span class="o">.</span><span class="n">dk</span><span class="o">/</span><span class="n">allocator</span><span class="o">/</span><span class="n">participant_id_allocator</span><span class="o">.</span><span class="n">php</span>
+</pre></div>
+</div>
+<p>and be redirected to your experiment with a participant ID of 1 allocated. If you go
+back there again, the ID will be 2.</p>
+<p>Because of the change we made to the JavaScript file, these participant IDs will be present in the data file.</p>
+<p>Finally, since <code class="docutils literal notranslate"><span class="pre">participant_id.txt</span></code> always contains the next participant number,
+you can edit it to change the next participant ID, or delete it to start again at 1.</p>
+</div>
+<div class="section" id="better-data-filenames">
+<h2>Better data filenames<a class="headerlink" href="#better-data-filenames" title="Permalink to this headline">¶</a></h2>
+<p>In the part of the code where we save the data, we can add the participant number to the filename.</p>
+<p>In this part of <code class="docutils literal notranslate"><span class="pre">jsPsych.init</span></code>:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">on_finish</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">saveData</span><span class="p">(</span><span class="s2">&quot;test.csv&quot;</span><span class="p">,</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">csv</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>and change it to this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">on_finish</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">saveData</span><span class="p">(</span><span class="nx">participant_id</span><span class="o">+</span><span class="s2">&quot;_data.csv&quot;</span><span class="p">,</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">csv</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This adds the participant ID to the filename, so that they will be called <code class="docutils literal notranslate"><span class="pre">1_data.csv</span></code>, <code class="docutils literal notranslate"><span class="pre">2_data.csv</span></code>,
+and so on.</p>
+<p>We could also add the date to the filename. It’s better to do this on the server, as the
+participant’s computer may have the date wrong. In <code class="docutils literal notranslate"><span class="pre">record_result.php</span></code>, change the line:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$path = $server_data.&quot;/&quot;.$obj[&quot;filename&quot;];</span>
+</pre></div>
+</div>
+<p>to this:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$path = $server_data.&quot;/&quot;.date(&quot;Y-m-d&quot;).&quot;_&quot;.$obj[&quot;filename&quot;];</span>
+</pre></div>
+</div>
+<p>This adds the date (according to the <em>server</em> clock) to the start of the filename, plus an underscore
+character <code class="docutils literal notranslate"><span class="pre">_</span></code> to separate this date from the rest of the name.</p>
+<p>Run your experiment again (starting from the ID allocator) and you should see a new file in
+<code class="docutils literal notranslate"><span class="pre">server_data</span></code> with a filename something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2020</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">29_3</span><span class="n">_data</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="condition-number">
+<h2>Condition number<a class="headerlink" href="#condition-number" title="Permalink to this headline">¶</a></h2>
+<p>When running an experiment, it’s common to want to counterbalance participants
+between several conditions. The usual way to do this is allocate them in order. For example,
+for three conditions:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 61%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Participant ID</p></th>
+<th class="head"><p>Condition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>etc.</p></td>
+<td><p>etc.</p></td>
+</tr>
+</tbody>
+</table>
+<p>We can easily allocate conditions using JavaScript modulus, <code class="docutils literal notranslate"><span class="pre">%</span></code>.</p>
+<p>The code:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">y</span> <span class="o">%</span> <span class="nx">z</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>gives the remainder when <code class="docutils literal notranslate"><span class="pre">y</span></code> is divided by <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
+<p>In our example:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Participant ID</p></th>
+<th class="head"><p>Remainder (ID % 3)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>etc.</p></td>
+<td><p>etc.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Let’s add this to the experiment. At the top of <code class="docutils literal notranslate"><span class="pre">experiment.js</span></code>, after the
+participant ID code, add this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">condition_number</span> <span class="o">=</span> <span class="nx">participant_id</span> <span class="o">%</span> <span class="mi">3</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">condition_number</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">condition_number</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We’ll also want to record this in our results, so after that add:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">addProperties</span><span class="p">({</span><span class="nx">condition</span><span class="o">:</span> <span class="nx">condition_number</span><span class="p">});</span>
+</pre></div>
+</div>
+<p>Run your experiment and check that the condition number appears in the output.</p>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="pptcondition.html#pptcondition"><span class="std std-ref">this example</span></a> of gathering a participant number
+from the URL, calculating a condition number, and changing the data filename.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="web.html">01 About the Web</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jspsych_au.html">02 An introduction to jsPsych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jspsych_au_pract.html">03 jsPsych practical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repetition.html">A1 Repetition code example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="factorial.html">A2 Factorial code example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="factorial_with_fixation.html">A3 Factorial with fixation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasaving.html">B1 Data saving example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linebyline.html">B2 Data saving line-by-line example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="surveytext.html">B3 Exercise: Use survey-text to add a property</a></li>
+<li class="toctree-l1"><a class="reference internal" href="record_result.html">B4 PHP code to save data on the server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pptcondition.html">C1 Participant and condition number example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple_images.html">D1 Multiple images example using timeline variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple_images_loop.html">D2 Multiple images example using a loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stroop_timeline_variables.html">D3 Stroop example using timeline variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stroop_loop.html">D4 Stroop example using a loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stroop_functions.html">D5 Stroop example using functions</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/ppt.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>PHP code to receive data on the server</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="php-code-to-receive-data-on-the-server">
+<h1>PHP code to receive data on the server<a class="headerlink" href="#php-code-to-receive-data-on-the-server" title="Permalink to this headline">¶</a></h1>
+<p>Note that:</p>
+<ul class="simple">
+<li><p>You <strong>must</strong> replace <code class="docutils literal notranslate"><span class="pre">UUN</span></code> with your username.</p></li>
+<li><p>Throughout all the examples, this file is given the name <code class="docutils literal notranslate"><span class="pre">record_result.php</span></code>.</p></li>
+<li><p>The line <code class="docutils literal notranslate"><span class="pre">$outfile</span> <span class="pre">=</span> <span class="pre">fopen($path,</span> <span class="pre">&quot;a&quot;);</span></code> opens the file in “append” mode, which means results will always be appended to the file. If you want this code to always write a new file (possibly replacing the old one), change the <code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code> to <code class="docutils literal notranslate"><span class="pre">&quot;w&quot;</span></code>.</p></li>
+</ul>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+<span class="nv">$json</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;php://input&#39;</span><span class="p">);</span>
+<span class="nv">$obj</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$json</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$server_data</span> <span class="o">=</span> <span class="s1">&#39;/home/UUN/server_data&#39;</span><span class="p">;</span>
+<span class="nv">$path</span> <span class="o">=</span> <span class="nv">$server_data</span><span class="o">.</span><span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="nv">$obj</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">];</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">substr</span><span class="p">(</span><span class="nb">realpath</span><span class="p">(</span><span class="nb">dirname</span><span class="p">(</span><span class="nv">$path</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">strlen</span><span class="p">(</span><span class="nv">$server_data</span><span class="p">))</span><span class="o">!=</span><span class="nv">$server_data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">error_log</span><span class="p">(</span><span class="s2">&quot;attempt to write to bad path: &quot;</span><span class="o">.</span><span class="nv">$path</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nv">$outfile</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">);</span>
+    <span class="nb">fwrite</span><span class="p">(</span>
+        <span class="nv">$outfile</span><span class="p">,</span>
+        <span class="nb">sprintf</span><span class="p">(</span><span class="nv">$obj</span><span class="p">[</span><span class="s2">&quot;filedata&quot;</span><span class="p">])</span>
+    <span class="p">);</span>
+    <span class="nb">fclose</span><span class="p">(</span><span class="nv">$outfile</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="web.html">01 About the Web</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/record_result.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

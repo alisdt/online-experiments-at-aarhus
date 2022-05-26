@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>Database saving example</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="database-saving-example">
+<h1>Database saving example<a class="headerlink" href="#database-saving-example" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install php-pgsql
+
+sudo su - postgres
+psql
+</pre></div>
+</div>
+<p>on the psql prompt:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span>create database test1;
+\c test1
+create table mydata (
+ id serial primary key,
+ participant integer not null,
+ keypress char(1),
+ rt_ms integer
+);
+</pre></div>
+</div>
+<p>and then exit from psql and the postgres account (ctrl-D for both)</p>
+<p>Add the following code to a PHP file, in my example it’s in <code class="docutils literal notranslate"><span class="pre">/var/www/html/test_pg.php</span></code></p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+<span class="c1">// take in the uploaded data</span>
+<span class="nv">$json</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;php://input&#39;</span><span class="p">);</span>
+<span class="c1">// treat it as json</span>
+<span class="nv">$obj</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$json</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="c1">// this will be e.g.</span>
+<span class="c1">// { participant: 12, response_key: &#39;c&#39;, rt: 210 }</span>
+<span class="c1">// as sent from</span>
+
+<span class="c1">// ADD THE RIGHT DB PASSWORD AND NAME</span>
+<span class="nv">$connection</span> <span class="o">=</span> <span class="nb">pg_connect</span><span class="p">(</span><span class="s2">&quot;user=postgres password=XXXXXXX host=localhost dbname=test1&quot;</span><span class="p">)</span> <span class="k">or</span> <span class="k">die</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t connect to database&quot;</span><span class="p">);</span>
+
+<span class="c1">// ADD THE RIGHT TABLE NAME (instead of mydata)</span>
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nb">pg_prepare</span><span class="p">(</span>
+        <span class="nv">$connection</span><span class="p">,</span>
+        <span class="s2">&quot;add_data&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;insert into mydata (participant, keypress, rt_ms) values ($1, $2, $3)&quot;</span>
+<span class="p">);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">pg_execute</span><span class="p">(</span>
+        <span class="nv">$connection</span><span class="p">,</span>
+        <span class="s2">&quot;add_data&quot;</span><span class="p">,</span>
+        <span class="k">array</span><span class="p">(</span><span class="nv">$obj</span><span class="p">[</span><span class="s2">&quot;participant&quot;</span><span class="p">],</span> <span class="nv">$obj</span><span class="p">[</span><span class="s2">&quot;response_key&quot;</span><span class="p">],</span> <span class="nv">$obj</span><span class="p">[</span><span class="s2">&quot;rt&quot;</span><span class="p">])</span>
+<span class="p">)</span> <span class="k">or</span> <span class="k">die</span><span class="p">(</span><span class="s2">&quot;INSERT failed&quot;</span><span class="p">);</span>
+
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">/var/www/html/stroop</span></code>, add the following to <code class="docutils literal notranslate"><span class="pre">stroop.html</span></code>:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Stroop task<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../jspsych-6.1.0/jspsych.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;stroop.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;../jspsych-6.1.0/css/jspsych.css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">link</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+
+and this to ``stroop.js``:
+</pre></div>
+</div>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blå&#39;</span><span class="p">,</span> <span class="s1">&#39;gul&#39;</span><span class="p">,</span> <span class="s1">&#39;grøn&#39;</span><span class="p">,</span> <span class="s1">&#39;rød&#39;</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">colours</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">];</span>
+
+
+<span class="kd">var</span> <span class="nx">factors</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">word</span><span class="o">:</span> <span class="nx">words</span><span class="p">,</span> <span class="nx">colour</span><span class="o">:</span> <span class="nx">colours</span> <span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">factorial_table</span> <span class="o">=</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">randomization</span><span class="p">.</span><span class="nx">factorial</span><span class="p">(</span><span class="nx">factors</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">trial</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;html-keyboard-response&#39;</span><span class="p">,</span>
+    <span class="nx">stimulus</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// e.g. &lt;span style=&quot;color: blue&quot;&gt;red&lt;/span&gt;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="s1">&#39;&lt;span style=&quot;font-size: xx-large; color:&#39;</span><span class="o">+</span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s2">&quot;colour&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&quot;&gt;&#39;</span><span class="o">+</span>
+            <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&lt;/span&gt;&#39;</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">timeline_variable_node</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="p">[</span><span class="nx">trial</span><span class="p">],</span>
+    <span class="nx">timeline_variables</span><span class="o">:</span> <span class="nx">factorial_table</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">saveTrialData</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="c1">// instead of sending text CSV, send the record as JSON</span>
+    <span class="c1">// e.g. {</span>
+    <span class="c1">// participant: 1,</span>
+    <span class="c1">// keypress: &#39;v&#39;,</span>
+    <span class="c1">// etc.</span>
+    <span class="c1">// }</span>
+    <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">&#39;../test_pg.php&#39;</span><span class="p">;</span> <span class="c1">// THIS MUST MATCH THE DB SAVING SCRIPT</span>
+    <span class="kd">var</span> <span class="nx">data_to_send</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
+    <span class="c1">// translate keypress</span>
+    <span class="nx">data_to_send</span><span class="p">[</span><span class="s1">&#39;response_key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">pluginAPI</span><span class="p">.</span><span class="nx">convertKeyCodeToKeyCharacter</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="s1">&#39;key_press&#39;</span><span class="p">]);</span>
+    <span class="c1">// fixed value for now! add the real participant number later elsewhere</span>
+    <span class="c1">// in the code, and delete this line</span>
+    <span class="nx">data_to_send</span><span class="p">[</span><span class="s1">&#39;participant&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+    <span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span>
+        <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+        <span class="nx">body</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data_to_send</span><span class="p">),</span>
+        <span class="nx">headers</span><span class="o">:</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">({</span>
+                <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span>
+        <span class="p">})</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">jsPsych</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+    <span class="nx">timeline</span><span class="o">:</span> <span class="p">[</span><span class="nx">timeline_variable_node</span><span class="p">],</span>
+    <span class="nx">on_data_update</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">saveTrialData</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="web.html">01 About the Web</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jspsych_au.html">02 An introduction to jsPsych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repetition.html">A1 Repetition code example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="factorial.html">A2 Factorial code example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="factorial_with_fixation.html">A3 Factorial with fixation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasaving.html">B1 Data saving example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linebyline.html">B2 Data saving line-by-line example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="surveytext.html">B3 Exercise: Use survey-text to add a property</a></li>
+<li class="toctree-l1"><a class="reference internal" href="record_result.html">B4 PHP code to save data on the server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pptcondition.html">C1 Participant and condition number example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple_images.html">D1 Multiple images example using timeline variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple_images_loop.html">D2 Multiple images example using a loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stroop_timeline_variables.html">D3 Stroop example using timeline variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stroop_loop.html">D4 Stroop example using a loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stroop_functions.html">D5 Stroop example using functions</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/database_saving.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

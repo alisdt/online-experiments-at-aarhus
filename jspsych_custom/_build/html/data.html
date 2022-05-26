@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+<title>Getting data from your experiment</title>
+
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-data-from-your-experiment">
+<span id="data"></span><h1>Getting data from your experiment<a class="headerlink" href="#getting-data-from-your-experiment" title="Permalink to this headline">¶</a></h1>
+<p>Of course, for your experiment to be useful you’ll need to record the results!
+Here we’ll take a look at different ways of getting results out of a jsPsych
+experiment.</p>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>As we’ve seen before, if you’re just testing your experiment you can show the
+results after the experiment with something like this:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
+  <span class="nx">timeline</span><span class="o">:</span> <span class="nx">timeline</span><span class="p">,</span>
+  <span class="nx">on_finish</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">displayData</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sending-the-data-to-the-server">
+<h2>Sending the data to the server<a class="headerlink" href="#sending-the-data-to-the-server" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">record_result.php</span></code> is a small program that runs on the server when a particular page is accessed.
+This receives the data and saves it to disk.</p>
+<div class="topic">
+<p class="topic-title"><code class="docutils literal notranslate"><span class="pre">server_data</span></code> and security</p>
+<p>You’ll have noticed that on the server there’s a folder called <code class="docutils literal notranslate"><span class="pre">server_data</span></code>. This is where
+the results will be stored.</p>
+<p>For security reasons, it would be bad for your experiment to be
+able to add files to the <code class="docutils literal notranslate"><span class="pre">public_html</span></code> area. Anything there could then be seen by the outside
+world, and could then be used to spread viruses or for other malicious purposes.
+It may seem far-fetched, but institutions like universities are often targeted for this purpose
+as people are more likely to trust a link on a university website.</p>
+</div>
+<p>This small program is in a different programming language called PHP. I won’t go into the details
+of this – if you’re interested, PHP has a lot in common with Javascript.</p>
+<p>As I said before, this code will receive the data. Now we need to write some code to <em>send</em> the data. Remember
+that the experiment is running entirely in the participant’s web browser. We’ll write some code that sends all
+of the data from the experiment to the server. This will happen right at the end of the experiment.</p>
+<p>In the your experiment’s JavaScript file, add a new function:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">saveData</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">data_in</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">&#39;record_result.php&#39;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">data_to_send</span> <span class="o">=</span> <span class="p">{</span><span class="nx">filename</span><span class="o">:</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">filedata</span><span class="o">:</span> <span class="nx">data_in</span><span class="p">};</span>
+    <span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span>
+        <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+        <span class="nx">body</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data_to_send</span><span class="p">),</span>
+        <span class="nx">headers</span><span class="o">:</span> <span class="k">new</span> <span class="nx">Headers</span><span class="p">({</span>
+                <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span>
+        <span class="p">})</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="topic">
+<p class="topic-title">fetch</p>
+<p>This uses a relatively new function called <code class="docutils literal notranslate"><span class="pre">fetch</span></code>. While this is the best way to send data, it’s not
+supported by all web browsers. Notably, it doesn’t work on Internet Explorer. If you need the experiment
+to be available on IE, you can either use a different method to send the data (see
+<a class="reference external" href="http://www.jspsych.org/overview/data/#storing-data-permanently-as-a-file">the jsPsych documentation</a> )
+or use the <a class="reference external" href="https://github.com/github/fetch">fetch polyfill</a> <a class="footnote-reference brackets" href="#polyfills" id="id1">2</a> .</p>
+</div>
+<p>Now finally, we need to change the experiment to send the data. Change the function
+given in <code class="docutils literal notranslate"><span class="pre">on_finish</span></code> to call <code class="docutils literal notranslate"><span class="pre">saveData</span></code>. Remember that the first thing you
+give it should be the filename for the data file, and the second thing should
+be the data as CSV (see hints below).</p>
+<p>This should replace any previous <code class="docutils literal notranslate"><span class="pre">on_finish</span></code> that was in the call.</p>
+<div class="section" id="hint">
+<h3>Hint<a class="headerlink" href="#hint" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>You can get the data from your experiment as CSV with jsPsych.data.get().csv()</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="how-it-works">
+<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h2>
+<p>The protocol used for the web, HTTP, has two different ways of getting web pages. <a class="footnote-reference brackets" href="#http" id="id2">3</a> These are called GET and POST.</p>
+<p>To use GET, a web browser sends a request with a URL <a class="footnote-reference brackets" href="#url" id="id3">4</a> and gets back a page. Any extra information
+in a GET must be included in the URL. It will look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>http://example.com/page?colour=red&amp;size=3
+</pre></div>
+</div>
+<p>Here after the location of the page, there are two values – “colour” is “red” and “size” is “3”.</p>
+<p>Instead of sending data this way, for larger amounts of data, a POST is used. This might
+be used to send data from a web form, for example. The data are not sent in the URL – instead, the browser sends them
+attached to the request, in a way that isn’t visible to the user.</p>
+<p>The data that we send is:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{ filename: &quot;test.csv&quot;, filedata: &quot;\&quot;rt\&quot;,\&quot;stimulus\&quot;,\&quot;key_press\&quot;,\&quot;trial_type\&quot;,\&quot;trial_index\&quot;, .... &quot; }
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">filedata</span></code> contains the whole contents of the CSV file. The PHP program at the other end receives this data
+in the POST.
+It opens a file corresponding to the given filename, and saves the data in it.</p>
+</div>
+<div class="section" id="adding-new-data-fields">
+<h2>Adding new data fields<a class="headerlink" href="#adding-new-data-fields" title="Permalink to this headline">¶</a></h2>
+<p>You will almost certainly want to store more data than jsPsych gives you by default.</p>
+<p>Some data will remain the same for the whole test for each participant, such as
+participant number or demographics. Other data will change for each trial. Let’s look at both of these.</p>
+<div class="section" id="data-that-doesn-t-change">
+<span id="addproperties"></span><h3>Data that doesn’t change<a class="headerlink" href="#data-that-doesn-t-change" title="Permalink to this headline">¶</a></h3>
+<p>You can add this using <code class="docutils literal notranslate"><span class="pre">jspsych.data.addProperties()</span></code>. For example, let’s add the date and time of the start of
+the experiment.</p>
+<p>Before your <code class="docutils literal notranslate"><span class="pre">jsPsych.init</span></code>, add the code:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">addProperties</span><span class="p">({</span> <span class="nx">start_time</span><span class="o">:</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()).</span><span class="nx">toISOString</span><span class="p">()</span> <span class="p">});</span>
+</pre></div>
+</div>
+<p>This adds a new column with the time at the start of the experiment. (Of course, you have to be cautious with this
+information, as it will give the time on the participant’s computer!)</p>
+</div>
+<div class="section" id="data-that-does-change">
+<h3>Data that does change<a class="headerlink" href="#data-that-does-change" title="Permalink to this headline">¶</a></h3>
+<p>You can add extra information that varies for each trial. If you haven’t already, add a fixation node to your
+current copy of the <code class="docutils literal notranslate"><span class="pre">factorial</span></code> experiment. (You can see how this is done
+<a class="reference internal" href="factorial_with_fixation.html#factorial-with-fixation"><span class="std std-ref">here</span></a> ). The fixation uses the <code class="docutils literal notranslate"><span class="pre">jspsych-html-keyboard-response</span></code> plugin so
+remember to add this to your <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code> file.</p>
+<p>Now run the experiment again. You’ll see that the fixation node also generates a line in the output.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;rt&quot;</span><span class="p">,</span><span class="s2">&quot;stimulus&quot;</span><span class="p">,</span><span class="s2">&quot;key_press&quot;</span><span class="p">,</span><span class="s2">&quot;trial_type&quot;</span><span class="p">,</span><span class="s2">&quot;trial_index&quot;</span><span class="p">,</span><span class="s2">&quot;time_elapsed&quot;</span><span class="p">,</span><span class="s2">&quot;internal_node_id&quot;</span>
+<span class="s2">&quot;null&quot;</span><span class="p">,</span><span class="s2">&quot;+&quot;</span><span class="p">,</span><span class="s2">&quot;null&quot;</span><span class="p">,</span><span class="s2">&quot;html-keyboard-response&quot;</span><span class="p">,</span><span class="s2">&quot;0&quot;</span><span class="p">,</span><span class="s2">&quot;753&quot;</span><span class="p">,</span><span class="s2">&quot;0.0-0.0-0.0&quot;</span>
+<span class="s2">&quot;1010&quot;</span><span class="p">,</span><span class="s2">&quot;Dog1.jpg&quot;</span><span class="p">,</span><span class="s2">&quot;32&quot;</span><span class="p">,</span><span class="s2">&quot;image-keyboard-response&quot;</span><span class="p">,</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="s2">&quot;1777&quot;</span><span class="p">,</span><span class="s2">&quot;0.0-0.0-1.0&quot;</span>
+<span class="s2">&quot;null&quot;</span><span class="p">,</span><span class="s2">&quot;+&quot;</span><span class="p">,</span><span class="s2">&quot;null&quot;</span><span class="p">,</span><span class="s2">&quot;html-keyboard-response&quot;</span><span class="p">,</span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="s2">&quot;2283&quot;</span><span class="p">,</span><span class="s2">&quot;0.0-0.0-0.1&quot;</span>
+</pre></div>
+</div>
+<p>We might want to filter these (or other nodes) out. To add this to the nodes, we use the <code class="docutils literal notranslate"><span class="pre">data</span></code> field.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">fixation</span></code> node, add:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">:</span> <span class="p">{</span> <span class="nb">type</span><span class="p">:</span> <span class="s1">&#39;fixation&#39;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Remember that you’ll need to add a comma to the line before, so something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">fixation</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="o">....</span>
+    <span class="n">response_ends_trial</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">:</span> <span class="p">{</span> <span class="nb">type</span><span class="p">:</span> <span class="s1">&#39;fixation&#39;</span> <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Now do the same for the <code class="docutils literal notranslate"><span class="pre">trial</span></code> node, but add:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">:</span> <span class="p">{</span> <span class="nb">type</span><span class="p">:</span> <span class="s1">&#39;trial&#39;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Run your experiment again. There should be a new column, with “trial” or “fixation”. This will make it easier
+to filter out fixations.</p>
+<div class="topic">
+<p class="topic-title">Filters</p>
+<p>If you want to try this out using jsPsych’s built in filters, make sure you have data saving implemented
+as in the previous section.</p>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">jsPsych.data.get()</span></code> with</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">jsPsych</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">get</span><span class="p">().</span><span class="nx">filter</span><span class="p">({</span> <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;trial&#39;</span> <span class="p">});</span>
+</pre></div>
+</div>
+<p>That should return just the data from the nodes with “type” equal to “trial”.</p>
+<p>While this is good for testing, it’s always safer to save <em>all</em> the raw data, and filter it in analysis.</p>
+<p>If you get filtering wrong in analysis, you can run it again. If you get filtering wrong when saving the
+data, anything which was filtered out is gone forever!</p>
+</div>
+<p>We can also add new fields which change every time. In the <code class="docutils literal notranslate"><span class="pre">trial</span></code> node, change <code class="docutils literal notranslate"><span class="pre">data</span></code> part to read:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;trial&quot;</span><span class="p">,</span>
+    <span class="nx">stimulus_duration</span><span class="o">:</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s1">&#39;stimulus_duration&#39;</span><span class="p">),</span>
+    <span class="nx">fixation_duration</span><span class="o">:</span> <span class="nx">jsPsych</span><span class="p">.</span><span class="nx">timelineVariable</span><span class="p">(</span><span class="s1">&#39;fixation_duration&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This will tell jsPsych to copy these values into the data. Reload the experiment and you should see two
+new columns for these values.</p>
+</div>
+</div>
+<div class="section" id="extra-exercise">
+<h2>Extra Exercise<a class="headerlink" href="#extra-exercise" title="Permalink to this headline">¶</a></h2>
+<p>In online experiments it’s quite common to have the participant type in an ID number,
+for example their Prolific ID or Amazon MTurk number, that will allow you to
+verify their participation and pay them.</p>
+<p>Add a node at the beginning of your code which allows the user to input an ID, using
+<a class="reference external" href="http://www.jspsych.org/plugins/jspsych-survey-text/">the survey-text plugin</a> . (Remember you’ll also have to add a <code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code> tag
+to your <code class="docutils literal notranslate"><span class="pre">experiment.html</span></code> file to load the plugin). Add this node to your experiment
+at the beginning. This works a little differently to the plugins we’ve seen before,
+so be sure to read the documentation before you start.</p>
+<p>Before you go any further, run the experiment and check that this new node only appears
+once at the beginning of the experiment. Check the console to make sure there are no
+errors.</p>
+<p>In your new node, add a new item <code class="docutils literal notranslate"><span class="pre">on_finish</span></code>. This specifies a function to call
+when the trial is finished. Create an <em>anonymous function</em> (see
+<a class="reference internal" href="javascript.html#id5"><span class="std std-ref">this section</span></a>), and inside it use <code class="docutils literal notranslate"><span class="pre">jsPsych.data.addProperties</span></code>
+(see <a class="reference internal" href="#addproperties"><span class="std std-ref">this section</span></a>) to add a new column to the data which includes
+the ID. The function you pass to <code class="docutils literal notranslate"><span class="pre">on_finish</span></code> receives the data from the trial as an
+argument – take a look at the documentation
+<a class="reference external" href="http://www.jspsych.org/overview/callbacks/#on_finish-trial">here</a> .</p>
+<p><strong>Hint:</strong> to get the response out of the <code class="docutils literal notranslate"><span class="pre">survey-text</span></code> trial, use</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">responses</span><span class="p">).</span><span class="nx">Q0</span>
+</pre></div>
+</div>
+<p>(If you gave your question a name, you’ll need to use this instead of “Q0”).</p>
+<p>This is quite involved so don’t be too worried if you don’t get it straight away –
+take some time to look in the documentation, use the Developer Tools, and feel free
+to ask questions!</p>
+</div>
+<div class="section" id="answers">
+<h2>Answers<a class="headerlink" href="#answers" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="datasaving.html#datasaving"><span class="std std-ref">Example experiment</span></a> which demonstrates saving data at the end
+of the experiment.</p></li>
+<li><p><a class="reference internal" href="linebyline.html#linebyline"><span class="std std-ref">Example experiment</span></a> which demonstrates saving data line-by-line.</p></li>
+<li><p><a class="reference internal" href="surveytext.html#surveytext"><span class="std std-ref">Solution to exercise</span></a> which takes the result of a <code class="docutils literal notranslate"><span class="pre">survey-text</span></code>
+node and adds it as a new column.</p></li>
+</ul>
+<p class="rubric">Footnotes</p>
+<dl class="footnote brackets">
+<dt class="label" id="missing"><span class="brackets">1</span></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">stimulus_duration</span></code> field is missing – we’ll see how to add this to the output later on.</p>
+</dd>
+<dt class="label" id="polyfills"><span class="brackets"><a class="fn-backref" href="#id1">2</a></span></dt>
+<dd><p>In JavaScript programming, a <em>polyfill</em> is a piece of code which implements a particular function,
+usually for browsers that don’t have that function.</p>
+</dd>
+<dt class="label" id="http"><span class="brackets"><a class="fn-backref" href="#id2">3</a></span></dt>
+<dd><p>…. and a few other methods for things like changing and deleting pages, but these are seldom used.</p>
+</dd>
+<dt class="label" id="url"><span class="brackets"><a class="fn-backref" href="#id3">4</a></span></dt>
+<dd><p>In case you’ve ever wondered, <strong>U</strong> niform <strong>R</strong> esource <strong>L</strong> ocator.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Online Experiments</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="web.html">01 About the Web</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jspsych_au.html">02 An introduction to jsPsych</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repetition.html">A1 Repetition code example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="factorial.html">A2 Factorial code example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="factorial_with_fixation.html">A3 Factorial with fixation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasaving.html">B1 Data saving example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linebyline.html">B2 Data saving line-by-line example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="surveytext.html">B3 Exercise: Use survey-text to add a property</a></li>
+<li class="toctree-l1"><a class="reference internal" href="record_result.html">B4 PHP code to save data on the server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pptcondition.html">C1 Participant and condition number example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple_images.html">D1 Multiple images example using timeline variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple_images_loop.html">D2 Multiple images example using a loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stroop_timeline_variables.html">D3 Stroop example using timeline variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stroop_loop.html">D4 Stroop example using a loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stroop_functions.html">D5 Stroop example using functions</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2020, Alisdair Tullo and The University of Edinburgh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/data.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+<div class="footer" role="contentinfo">
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Online Experiments</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Alisdair Tullo</span> and copyright The University of Edinburgh is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://softdev.ppls.ed.ac.uk/online_experiments" rel="dct:source">https://softdev.ppls.ed.ac.uk/online_experiments</a>.
+</div>
+
+  </body>
+</html>

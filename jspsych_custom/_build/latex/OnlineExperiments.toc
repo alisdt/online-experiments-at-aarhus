@@ -1,0 +1,61 @@
+\babel@toc {english}{}
+\contentsline {chapter}{\numberline {1}About the Web}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Requests and responses}{4}{section.1.1}
+\contentsline {section}{\numberline {1.2}HTML}{4}{section.1.2}
+\contentsline {section}{\numberline {1.3}CSS}{4}{section.1.3}
+\contentsline {section}{\numberline {1.4}JavaScript}{5}{section.1.4}
+\contentsline {section}{\numberline {1.5}Thanks!}{5}{section.1.5}
+\contentsline {chapter}{\numberline {2}An introduction to jsPsych}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}Overview}{7}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Documentation and examples}{7}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}How it works}{8}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}What can jsPsych do?}{9}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}When not to use jsPsych?}{9}{subsection.2.1.4}
+\contentsline {section}{\numberline {2.2}Anatomy of jsPsych experiment code}{9}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Nodes}{9}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Timelines}{10}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}jsPsych.init}{10}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}Exercise 1 \textendash {} First experiment}{11}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Installing jsPsych}{11}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}CyberDuck}{11}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}The Exercise}{11}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}More experiments}{12}{subsection.2.3.4}
+\contentsline {section}{\numberline {2.4}Practicalities}{13}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Terminology \textendash {} Arrays / lists}{13}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}File paths}{13}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}Single file jsPsych experiment}{13}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {2.4.4}HTML file and referencing JavaScript and CSS}{14}{subsection.2.4.4}
+\contentsline {section}{\numberline {2.5}Browser Developer Tools}{15}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}The console}{15}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}The debugger}{16}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}The console again}{18}{subsection.2.5.3}
+\contentsline {section}{\numberline {2.6}Some more capabilities of jsPsych}{18}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Repeating over sets of stimuli}{18}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}Randomisation and repeats}{20}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.3}Factorial design}{20}{subsection.2.6.3}
+\contentsline {subsection}{\numberline {2.6.4}Some full examples}{21}{subsection.2.6.4}
+\contentsline {subsection}{\numberline {2.6.5}Duration and ending trials}{21}{subsection.2.6.5}
+\contentsline {section}{\numberline {2.7}Exercise 2 \textendash {} Stroop task}{22}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}Seeing the results (and back to functional programming)}{22}{subsection.2.7.1}
+\contentsline {section}{\numberline {2.8}Exercise 3 \textendash {} Saving data}{23}{section.2.8}
+\contentsline {section}{\numberline {2.9}Extra Exercise \sphinxhyphen {} Participant numbers}{23}{section.2.9}
+\contentsline {subsection}{\numberline {2.9.1}More advanced use of timeline variables}{23}{subsection.2.9.1}
+\contentsline {subsection}{\numberline {2.9.2}Other useful parameters for timeline nodes}{24}{subsection.2.9.2}
+\contentsline {subsection}{\numberline {2.9.3}Flow control}{25}{subsection.2.9.3}
+\contentsline {subsubsection}{Looping}{25}{subsubsection*.3}
+\contentsline {subsubsection}{Conditional}{25}{subsubsection*.4}
+\contentsline {subsection}{\numberline {2.9.4}Getting hold of data inside the experiment}{25}{subsection.2.9.4}
+\contentsline {chapter}{\numberline {3}Database saving example}{27}{chapter.3}
+\contentsline {chapter}{\numberline {4}Repetition code example}{31}{chapter.4}
+\contentsline {chapter}{\numberline {5}Factorial code example}{33}{chapter.5}
+\contentsline {chapter}{\numberline {6}Factorial code example with fixation}{35}{chapter.6}
+\contentsline {chapter}{\numberline {7}Data saving example}{37}{chapter.7}
+\contentsline {chapter}{\numberline {8}Line\sphinxhyphen {}by\sphinxhyphen {}line data saving example}{39}{chapter.8}
+\contentsline {chapter}{\numberline {9}Solution to survey\sphinxhyphen {}text exercise}{41}{chapter.9}
+\contentsline {chapter}{\numberline {10}PHP code to receive data on the server}{43}{chapter.10}
+\contentsline {chapter}{\numberline {11}Example}{45}{chapter.11}
+\contentsline {chapter}{\numberline {12}Multiple images}{47}{chapter.12}
+\contentsline {chapter}{\numberline {13}Multiple images (using a loop)}{49}{chapter.13}
+\contentsline {chapter}{\numberline {14}Stroop with timeline variables}{51}{chapter.14}
+\contentsline {chapter}{\numberline {15}Stroop using a loop}{53}{chapter.15}
+\contentsline {chapter}{\numberline {16}Stroop with functions}{55}{chapter.16}
